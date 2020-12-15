@@ -47,6 +47,8 @@ dependencies {
 
     // import kotlinx serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
+
+    implementation("com.github.cliftonlabs:json-simple:3.1.0")
 }
 
 tasks {
@@ -54,7 +56,7 @@ tasks {
         archiveBaseName.set("sabre")
         manifest {
             attributes (
-                    "Main-Class" to "world.cepi.sabre.BootstrapWrapper",
+                    "Main-Class" to "world.deni.fang.Fang",
                     "Multi-Release" to true
             )
         }
@@ -68,7 +70,7 @@ tasks {
 
 configure<SourceSetContainer> {
     named("main") {
-        java.srcDir("src/main/kotlin")
+        java.srcDir("src/main/java")
     }
 }
 
