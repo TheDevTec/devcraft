@@ -1,5 +1,5 @@
 # Fang
-Sabre is a reimplementation of the Gameplay plugin using the Minestom API
+Sabre is a reimplementation of the Gameplay plugin using the Minestom API.
 I copied the basics of it from [Sabre](https://github.com/Project-Cepi/Sabre)
 
 ## Installation
