@@ -56,7 +56,7 @@ tasks {
         archiveBaseName.set("sabre")
         manifest {
             attributes (
-                    "Main-Class" to "world.deni.fang.Fang",
+                    "Main-Class" to "me.devtec.simplecraft.Loader",
                     "Multi-Release" to true
             )
         }
