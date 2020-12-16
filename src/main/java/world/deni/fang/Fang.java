@@ -4,6 +4,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.extras.optifine.OptifineSupport;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
@@ -22,7 +23,6 @@ public class Fang {
     final String INSTANCE_STORAGE_LOCATION = "./instances";
     final String WHITELIST_LOCATION = "./whitelist.json";
     final String OP_LOCATION = "./ops.json";
-
 
     public static void main(String[] args) {
         // Initialization
@@ -46,6 +46,9 @@ public class Fang {
 
         // Start the server on port 25565
         minecraftServer.start("localhost", 25565);
+
+        //enable optifine support
+        OptifineSupport.enable();
     }
 
     private static class GeneratorDemo implements ChunkGenerator {
