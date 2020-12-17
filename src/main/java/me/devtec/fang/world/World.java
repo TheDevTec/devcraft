@@ -14,6 +14,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.storage.StorageLocation;
 import net.minestom.server.storage.StorageOptions;
 import net.minestom.server.utils.BlockPosition;
+import net.minestom.server.world.DimensionType;
 import net.minestom.server.world.biomes.Biome;
 import org.jetbrains.annotations.NotNull;
 
@@ -204,18 +205,18 @@ public class World {
         }
     }
 
-    public World(String name, long seed)  {
-        this.name=name;
-        if(!new File(name).exists()){
-             Data d = new Data(name + "/IDENTITY");
-             d.set("seed", seed);
-             d.save(DataType.YAML);
-            this.seed=seed;
-        }else {
+    public World(String name, DimensionType type, long seed) {
+        this.name = name;
+        if (!new File(name).exists()) {
+            Data d = new Data(name + "/IDENTITY");
+            d.set("seed", seed);
+            d.save(DataType.YAML);
+            this.seed = seed;
+        } else {
             this.seed = new Data(name + "/IDENTITY").getLong("seed");
         }
         StorageLocation storageLocation = MinecraftServer.getStorageManager().getLocation(name, new StorageOptions().setCompression(true));
-        world = MinecraftServer.getInstanceManager().createInstanceContainer(storageLocation);
+        world = MinecraftServer.getInstanceManager().createInstanceContainer(type, storageLocation);
         world.setChunkGenerator(new Generator(seed));
         world.enableAutoChunkLoad(true);
     }

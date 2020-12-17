@@ -2,6 +2,7 @@ package me.devtec.fang.data;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import me.devtec.fang.Loader;
 import me.devtec.fang.data.collections.UnsortedList;
 import me.devtec.fang.data.collections.UnsortedSet;
 import me.devtec.fang.data.json.Maker;
@@ -75,6 +76,18 @@ public class Data implements me.devtec.fang.data.datas.Data {
 			reload(a);
 	}
 
+	public void addDefault(String key, Object value) {
+		if (!exists(key))
+			set(key, value);
+	}
+
+	public void addDefault(String key, Object value, Collection<String> comments) {
+		if (!exists(key)) {
+			set(key, value);
+			setComments(key, comments);
+		}
+	}
+
 	public boolean exists(String path) {
 		int a = 0;
 		for (String k : loader.get().keySet()) {
@@ -131,7 +144,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		return getOrCreateData(key).lines;
 	}
 
-	public Data setComments(String key, List<String> value) {
+	public Data setComments(String key, Collection<String> value) {
 		if (key == null)
 			return this;
 		getOrCreateData(key).lines.clear();
@@ -141,7 +154,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		return this;
 	}
 
-	public Data addComments(String key, List<String> value) {
+	public Data addComments(String key, Collection<String> value) {
 		if (value == null || key == null)
 			return this;
 		getOrCreateData(key).lines.addAll(value);
@@ -156,7 +169,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		return this;
 	}
 
-	public Data removeComments(String key, List<String> value) {
+	public Data removeComments(String key, Collection<String> value) {
 		if (value == null || key == null)
 			return this;
 		getOrCreateData(key).lines.removeAll(value);
@@ -432,7 +445,6 @@ public class Data implements me.devtec.fang.data.datas.Data {
 	}
 
 	public Data save(DataType type) {
-		synchronized (loader) {
 			try {
 				if (a == null)
 					return this;
@@ -467,6 +479,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 						w.write(h + System.lineSeparator());
 				} catch (Exception er) {
 				}
+				Loader.log(aw.toString());
 				for (String key : aw)
 					preparePath(key, key + ":", 0, w);
 				try {
@@ -477,7 +490,6 @@ public class Data implements me.devtec.fang.data.datas.Data {
 				w.close();
 			} catch (Exception er) {
 			}
-		}
 		return this;
 	}
 
@@ -561,7 +573,6 @@ public class Data implements me.devtec.fang.data.datas.Data {
 	}
 
 	private void preparePath(String path, String pathName, int spaces, java.io.Writer b) {
-		synchronized (loader) {
 			try {
 				DataHolder aw = loader.get().get(path);
 				Object o = aw != null ? aw.getValue() : null;
@@ -595,7 +606,6 @@ public class Data implements me.devtec.fang.data.datas.Data {
 					preparePath(path + "." + key, key + ":", spaces + 1, b);
 			} catch (Exception er) {
 			}
-		}
 	}
 
 	public String toString(DataType type) {
