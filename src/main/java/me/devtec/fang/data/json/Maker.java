@@ -1,7 +1,7 @@
-package me.devtec.simplecraft.data.json;
+package me.devtec.fang.data.json;
 
-import me.devtec.simplecraft.data.collections.UnsortedSet;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
+import me.devtec.fang.data.collections.UnsortedSet;
+import me.devtec.fang.data.maps.UnsortedMap;
 
 import java.util.Collection;
 

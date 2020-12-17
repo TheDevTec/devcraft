@@ -1,9 +1,9 @@
-package me.devtec.simplecraft.utils;
+package me.devtec.fang.utils;
 
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.data.json.Reader;
-import me.devtec.simplecraft.data.json.Writer;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.data.json.Reader;
+import me.devtec.fang.data.json.Writer;
+import me.devtec.fang.data.maps.UnsortedMap;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;

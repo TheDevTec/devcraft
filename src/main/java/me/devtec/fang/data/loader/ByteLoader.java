@@ -1,10 +1,10 @@
-package me.devtec.simplecraft.data.loader;
+package me.devtec.fang.data.loader;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import me.devtec.simplecraft.data.Data;
-import me.devtec.simplecraft.data.json.Reader;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
+import me.devtec.fang.data.Data;
+import me.devtec.fang.data.json.Reader;
+import me.devtec.fang.data.maps.UnsortedMap;
 
 import java.util.Base64;
 import java.util.Collection;

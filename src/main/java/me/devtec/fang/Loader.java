@@ -1,11 +1,11 @@
-package me.devtec.simplecraft;
+package me.devtec.fang;
 
-import me.devtec.simplecraft.commands.Stop;
-import me.devtec.simplecraft.data.Data;
-import me.devtec.simplecraft.data.DataType;
-import me.devtec.simplecraft.data.Ref;
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.world.World;
+import me.devtec.fang.commands.Stop;
+import me.devtec.fang.data.Data;
+import me.devtec.fang.data.DataType;
+import me.devtec.fang.data.Ref;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.world.World;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;

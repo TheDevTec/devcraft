@@ -1,13 +1,13 @@
-package me.devtec.simplecraft.data.json;
+package me.devtec.fang.data.json;
 
 import com.google.common.collect.Multimap;
 import com.google.common.io.CharStreams;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.devtec.simplecraft.data.Ref;
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
-import me.devtec.simplecraft.utils.StringUtils;
+import me.devtec.fang.data.Ref;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.data.maps.UnsortedMap;
+import me.devtec.fang.utils.StringUtils;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;

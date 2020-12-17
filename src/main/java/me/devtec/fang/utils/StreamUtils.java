@@ -1,8 +1,8 @@
-package me.devtec.simplecraft.utils;
+package me.devtec.fang.utils;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.devtec.simplecraft.data.json.Reader;
+import me.devtec.fang.data.json.Reader;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -56,7 +56,7 @@ public class StreamUtils {
 
     public static InputStream toStreamObject(Object obj) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF(me.devtec.simplecraft.data.json.Writer.write(obj));
+        out.writeUTF(me.devtec.fang.data.json.Writer.write(obj));
         return new ByteArrayInputStream(out.toByteArray());
     }
 

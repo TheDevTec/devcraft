@@ -1,4 +1,4 @@
-package me.devtec.simplecraft.data.json;
+package me.devtec.fang.data.json;
 
 public interface JsonWriter {
 	String serilize(java.io.Writer writer, Object item);

@@ -1,8 +1,8 @@
-package me.devtec.simplecraft.data.loader;
+package me.devtec.fang.data.loader;
 
-import me.devtec.simplecraft.data.Data;
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
+import me.devtec.fang.data.Data;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.data.maps.UnsortedMap;
 
 import java.util.Collection;
 import java.util.List;

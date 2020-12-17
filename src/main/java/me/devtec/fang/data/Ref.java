@@ -1,6 +1,6 @@
-package me.devtec.simplecraft.data;
+package me.devtec.fang.data;
 
-import me.devtec.simplecraft.data.collections.UnsortedList;
+import me.devtec.fang.data.collections.UnsortedList;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

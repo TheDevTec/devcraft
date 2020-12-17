@@ -1,6 +1,6 @@
-package me.devtec.simplecraft.data.maps;
+package me.devtec.fang.data.maps;
 
-import me.devtec.simplecraft.data.collections.UnsortedSet;
+import me.devtec.fang.data.collections.UnsortedSet;
 
 import java.util.Collection;
 import java.util.Iterator;

@@ -1,4 +1,4 @@
-package me.devtec.simplecraft.data;
+package me.devtec.fang.data;
 
 public enum DataType {
 	YAML, JSON, DATA, BYTE

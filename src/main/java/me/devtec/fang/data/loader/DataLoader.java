@@ -1,7 +1,7 @@
-package me.devtec.simplecraft.data.loader;
+package me.devtec.fang.data.loader;
 
-import me.devtec.simplecraft.data.datas.Data;
-import me.devtec.simplecraft.utils.StreamUtils;
+import me.devtec.fang.data.datas.Data;
+import me.devtec.fang.utils.StreamUtils;
 
 import java.io.File;
 import java.util.Collection;
@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class DataLoader implements Data {
-	public abstract Map<String, me.devtec.simplecraft.data.Data.DataHolder> get();
+	public abstract Map<String, me.devtec.fang.data.Data.DataHolder> get();
 
-	public abstract void set(String key, me.devtec.simplecraft.data.Data.DataHolder value);
+	public abstract void set(String key, me.devtec.fang.data.Data.DataHolder value);
 
 	public abstract void remove(String key);
 

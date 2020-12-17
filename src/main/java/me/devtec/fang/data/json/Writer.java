@@ -1,12 +1,12 @@
-package me.devtec.simplecraft.data.json;
+package me.devtec.fang.data.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.LinkedTreeMap;
-import me.devtec.simplecraft.data.Ref;
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.data.collections.UnsortedSet;
-import me.devtec.simplecraft.data.maps.UnsortedMap;
+import me.devtec.fang.data.Ref;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.data.collections.UnsortedSet;
+import me.devtec.fang.data.maps.UnsortedMap;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

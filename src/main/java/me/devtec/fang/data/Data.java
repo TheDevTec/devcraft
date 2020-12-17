@@ -1,15 +1,15 @@
-package me.devtec.simplecraft.data;
+package me.devtec.fang.data;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.devtec.simplecraft.data.collections.UnsortedList;
-import me.devtec.simplecraft.data.collections.UnsortedSet;
-import me.devtec.simplecraft.data.json.Maker;
-import me.devtec.simplecraft.data.json.Writer;
-import me.devtec.simplecraft.data.loader.DataLoader;
-import me.devtec.simplecraft.data.loader.EmptyLoader;
-import me.devtec.simplecraft.utils.StreamUtils;
-import me.devtec.simplecraft.utils.StringUtils;
+import me.devtec.fang.data.collections.UnsortedList;
+import me.devtec.fang.data.collections.UnsortedSet;
+import me.devtec.fang.data.json.Maker;
+import me.devtec.fang.data.json.Writer;
+import me.devtec.fang.data.loader.DataLoader;
+import me.devtec.fang.data.loader.EmptyLoader;
+import me.devtec.fang.utils.StreamUtils;
+import me.devtec.fang.utils.StringUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
-public class Data implements me.devtec.simplecraft.data.datas.Data {
+public class Data implements me.devtec.fang.data.datas.Data {
 	public static class DataHolder {
 		private Object o;
 		private final List<String> lines = new UnsortedList<>();

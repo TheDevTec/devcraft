@@ -193,7 +193,6 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/gradle,intellij,kotlin,windows,linux
 
 minecraft_data/
-sabre-config.json
 instances/
 .minestom_tmp
 .idea

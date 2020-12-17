@@ -16,7 +16,7 @@ repositories {
 
     listOf(
             "repo1.maven.org/maven2",
-            "repo.spongepowered.org/maven",
+           "repo.spongepowered.org/maven",
             "libraries.minecraft.net",
             "jitpack.io",
             "jcenter.bintray.com"
@@ -53,10 +53,10 @@ dependencies {
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveBaseName.set("sabre")
+        archiveBaseName.set("fang")
         manifest {
             attributes (
-                    "Main-Class" to "me.devtec.simplecraft.Loader",
+                    "Main-Class" to "me.devtec.fang.Loader",
                     "Multi-Release" to true
             )
         }

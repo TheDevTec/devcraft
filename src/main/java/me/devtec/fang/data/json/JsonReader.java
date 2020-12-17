@@ -1,4 +1,4 @@
-package me.devtec.simplecraft.data.json;
+package me.devtec.fang.data.json;
 
 public interface JsonReader {
 	Object deserilize(java.io.Reader reader);

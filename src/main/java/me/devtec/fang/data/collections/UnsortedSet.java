@@ -1,4 +1,4 @@
-package me.devtec.simplecraft.data.collections;
+package me.devtec.fang.data.collections;
 
 import java.util.Collection;
 import java.util.Iterator;

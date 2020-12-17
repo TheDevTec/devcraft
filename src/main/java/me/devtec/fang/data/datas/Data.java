@@ -1,4 +1,4 @@
-package me.devtec.simplecraft.data.datas;
+package me.devtec.fang.data.datas;
 
 import java.util.RandomAccess;
 
