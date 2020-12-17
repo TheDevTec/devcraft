@@ -15,12 +15,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtils {
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
-    public static interface ColormaticFactory {
-        public String colorize(String text);
+    public interface ColormaticFactory {
+        String colorize(String text);
 
-        public String getNextColor();
+        String getNextColor();
     }
 
     @SuppressWarnings("unchecked")
@@ -163,7 +163,7 @@ public class StringUtils {
     public static List<String> copyPartialMatches(String prefix, Iterable<String> originals) {
         List<String> collection = new UnsortedList<>();
         for (String string : originals)
-            if (string.length() < prefix.length() ? false : string.regionMatches(true, 0, prefix, 0, prefix.length()))
+            if (string.length() >= prefix.length() && string.regionMatches(true, 0, prefix, 0, prefix.length()))
                 collection.add(string);
         return collection;
     }
@@ -174,7 +174,7 @@ public class StringUtils {
     public static List<String> copySortedPartialMatches(String prefix, Iterable<String> originals) {
         List<String> collection = new UnsortedList<>();
         for (String string : originals)
-            if (string.length() < prefix.length() ? false : string.regionMatches(true, 0, prefix, 0, prefix.length()))
+            if (string.length() >= prefix.length() && string.regionMatches(true, 0, prefix, 0, prefix.length()))
                 collection.add(string);
         Collections.sort(collection);
         return collection;
@@ -300,7 +300,7 @@ public class StringUtils {
             if (typ.toLowerCase().startsWith("s")) {
                 time += num;
             }
-            if (typ.toLowerCase().equals("m") || typ.toLowerCase().startsWith("mi")) {
+            if (typ.equalsIgnoreCase("m") || typ.toLowerCase().startsWith("mi")) {
                 time += num * 60;
             }
             if (typ.toLowerCase().startsWith("h")) {
@@ -312,7 +312,7 @@ public class StringUtils {
             if (typ.toLowerCase().startsWith("w")) {
                 time += num * 604800;
             }
-            if (typ.toLowerCase().equals("mon")) {
+            if (typ.equalsIgnoreCase("mon")) {
                 time += num * 2629743.83;
             }
             if (typ.toLowerCase().startsWith("y")) {
@@ -550,7 +550,7 @@ public class StringUtils {
                 || fromString.equalsIgnoreCase("yes") || fromString.equalsIgnoreCase("no");
     }
 
-    private static Pattern special = Pattern.compile("[^A-Z-a-z0-9_]+");
+    private static final Pattern special = Pattern.compile("[^A-Z-a-z0-9_]+");
 
     public static boolean containsSpecial(String value) {
         return special.matcher(value).find();

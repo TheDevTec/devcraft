@@ -15,9 +15,10 @@ import java.util.regex.Pattern;
 public class YamlLoader extends DataLoader {
 	private static final Pattern pattern = Pattern.compile("[ ]*(['\"][^'\"]+['\"]|[^\"']?\\w+[^\"']?|.*?):[ ]*(.*)"),
 			fixSplit = Pattern.compile("[\"'](.*)['\"]");
-	private Map<String, Data.DataHolder> data = new UnsortedMap<>();
+	private final Map<String, Data.DataHolder> data = new UnsortedMap<>();
 	private boolean l;
-	private List<String> header = new UnsortedList<>(), footer = new UnsortedList<>();
+	private final List<String> header = new UnsortedList<>();
+    private List<String> footer = new UnsortedList<>();
 
 	public Set<String> getKeys() {
 		return data.keySet();
@@ -208,13 +209,13 @@ public class YamlLoader extends DataLoader {
 
 	private String r(String s) {
 		int remove = 0;
-		while (s.substring(s.length() - remove, s.length()).startsWith(" "))
+		while (s.substring(s.length() - remove).startsWith(" "))
 			++remove;
 		s=s.substring(0, s.length() - remove);
 		remove = 0;
-		while (s.substring(remove, s.length()).startsWith(" "))
+		while (s.substring(remove).startsWith(" "))
 			++remove;
-		return s.substring(remove, s.length());
+		return s.substring(remove);
 	}
 
 	@Override

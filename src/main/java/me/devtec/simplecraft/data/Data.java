@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class Data implements me.devtec.simplecraft.data.datas.Data {
 	public static class DataHolder {
 		private Object o;
-		private List<String> lines = new UnsortedList<>();
+		private final List<String> lines = new UnsortedList<>();
 
 		public DataHolder() {
 		}
@@ -51,7 +51,7 @@ public class Data implements me.devtec.simplecraft.data.datas.Data {
 	}
 
 	private DataLoader loader = new EmptyLoader();
-	private Set<String> aw = new UnsortedSet<>();
+	private final Set<String> aw = new UnsortedSet<>();
 	private File a;
 
 	public Data() {
@@ -95,8 +95,7 @@ public class Data implements me.devtec.simplecraft.data.datas.Data {
 		DataHolder h = loader.get().getOrDefault(key, null);
 		if (h == null) {
 			h = new DataHolder();
-			if (!aw.contains(key.split("\\.")[0]))
-				aw.add(key.split("\\.")[0]);
+			aw.add(key.split("\\.")[0]);
 			loader.set(key, h);
 		}
 		return h;
@@ -210,8 +209,7 @@ public class Data implements me.devtec.simplecraft.data.datas.Data {
 		aw.clear();
 		loader = DataLoader.findLoaderFor(input); // get & load
 		for (String k : loader.getKeys())
-			if (!aw.contains(k.split("\\.")[0]))
-				aw.add(k.split("\\.")[0]);
+			aw.add(k.split("\\.")[0]);
 		return this;
 	}
 
@@ -371,7 +369,7 @@ public class Data implements me.devtec.simplecraft.data.datas.Data {
 		Collection<Object> items = getList(key);
 		List<Boolean> list = new UnsortedList<>(items.size());
 		for (Object o : items)
-			list.add(o == null ? false : StringUtils.getBoolean(o.toString()));
+			list.add(o != null && StringUtils.getBoolean(o.toString()));
 		return list;
 	}
 
@@ -546,8 +544,7 @@ public class Data implements me.devtec.simplecraft.data.datas.Data {
 				c = subkeys ? c : c.replaceFirst("\\.", "").split("\\.")[0];
 				if (c.trim().isEmpty())
 					continue;
-				if (!a.contains(c))
-					a.add(c);
+				a.add(c);
 			}
 		return a;
 	}

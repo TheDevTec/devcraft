@@ -18,15 +18,15 @@ import java.util.regex.Pattern;
 
 public class Reader implements JsonReader {
 	//Do you want your own JsonParser? Override this one! Ref.set(Reader.class, "reader", <NewReaderJson>)
-	private static JsonReader reader = new Reader();
+	private static final JsonReader reader = new Reader();
 
 	public static Object read(String json) {
 		return reader.deserilize(json);
 	}
 
-	private static sun.misc.Unsafe unsafe = (sun.misc.Unsafe) Ref
+	private static final sun.misc.Unsafe unsafe = (sun.misc.Unsafe) Ref
 			.getNulled(Ref.field(sun.misc.Unsafe.class, "theUnsafe"));
-	private static Gson parser = new GsonBuilder().setLenient().create();
+	private static final Gson parser = new GsonBuilder().setLenient().create();
 
 	public Object object(String json) {
 		if (json == null)

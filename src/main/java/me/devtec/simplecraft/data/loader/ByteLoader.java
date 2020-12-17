@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ByteLoader extends DataLoader {
-	private Map<String, Data.DataHolder> data = new UnsortedMap<>();
+	private final Map<String, Data.DataHolder> data = new UnsortedMap<>();
 	private boolean l;
 
 	@Override

@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class JsonLoader extends DataLoader {
 	private boolean l;
-	private Map<String, Data.DataHolder> data = new UnsortedMap<>();
+	private final Map<String, Data.DataHolder> data = new UnsortedMap<>();
 
 	@Override
 	public Map<String, Data.DataHolder> get() {

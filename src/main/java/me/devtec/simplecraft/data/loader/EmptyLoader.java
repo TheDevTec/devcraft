@@ -10,8 +10,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class EmptyLoader extends DataLoader {
-	private Map<String, Data.DataHolder> data = new UnsortedMap<>();
-	private List<String> header = new UnsortedList<>(), footer = new UnsortedList<>();
+	private final Map<String, Data.DataHolder> data = new UnsortedMap<>();
+	private final List<String> header = new UnsortedList<>();
+    private final List<String> footer = new UnsortedList<>();
 
 	@Override
 	public Map<String, Data.DataHolder> get() {

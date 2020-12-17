@@ -17,7 +17,7 @@ import java.util.Set;
  */
 
 public class UnsortedMap<K, V> implements Map<K, V> {
-	private Set<Entry<K, V>> entries;
+	private final Set<Entry<K, V>> entries;
 
 	public UnsortedMap() {
 		this(10);

@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class Writer implements JsonWriter {
-	private static JsonWriter writer = new Writer();
+	private static final JsonWriter writer = new Writer();
 
 	public static String write(Object object) {
 		return writer.serilize(object);
@@ -38,8 +38,8 @@ public class Writer implements JsonWriter {
 		return map;
 	}
 
-	private static Gson pretty = new GsonBuilder().setPrettyPrinting().create(),
-			simple = new GsonBuilder().create();
+	private static final Gson pretty = new GsonBuilder().setPrettyPrinting().create();
+	private static final Gson simple = new GsonBuilder().create();
 
 	public String array(Object[] object, boolean addNulls) {
 		return array(object, addNulls, false);
@@ -48,7 +48,7 @@ public class Writer implements JsonWriter {
 	public String array(Object[] object, boolean addNulls, boolean fancy) {
 		if (object == null)
 			return null;
-		return (String) (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
+		return (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
 	}
 
 	public String collection(Collection<?> object, boolean addNulls) {
@@ -58,7 +58,7 @@ public class Writer implements JsonWriter {
 	public String collection(Collection<?> object, boolean addNulls, boolean fancy) {
 		if (object == null)
 			return null;
-		return (String) (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
+		return (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
 	}
 
 	public String map(Map<?, ?> object, boolean addNulls) {
@@ -68,7 +68,7 @@ public class Writer implements JsonWriter {
 	public String map(Map<?, ?> object, boolean addNulls, boolean fancy) {
 		if (object == null)
 			return null;
-		return (String) (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
+		return (fancy ? pretty : simple).toJson(fix(Arrays.asList(object), fancy, addNulls));
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class Writer implements JsonWriter {
 			enumMap.put("Map " + w.getClass().getName(), w);
 			return map(enumMap, addNulls, fancy);
 		}
-		return (String) (fancy ? pretty : simple).toJson((Object) convert(w, fancy, addNulls));
+		return (fancy ? pretty : simple).toJson(convert(w, fancy, addNulls));
 	}
 
 	public Object object2(Object w, boolean fancy, boolean addNulls) {
