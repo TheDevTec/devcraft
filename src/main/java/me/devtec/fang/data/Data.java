@@ -2,7 +2,6 @@ package me.devtec.fang.data;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import me.devtec.fang.Loader;
 import me.devtec.fang.data.collections.UnsortedList;
 import me.devtec.fang.data.collections.UnsortedSet;
 import me.devtec.fang.data.json.Maker;
@@ -479,7 +478,6 @@ public class Data implements me.devtec.fang.data.datas.Data {
 						w.write(h + System.lineSeparator());
 				} catch (Exception er) {
 				}
-				Loader.log(aw.toString());
 				for (String key : aw)
 					preparePath(key, key + ":", 0, w);
 				try {
