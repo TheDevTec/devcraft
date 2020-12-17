@@ -12,6 +12,7 @@ import net.minestom.server.extras.optifine.OptifineSupport;
 import net.minestom.server.instance.*;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.utils.BlockPosition;
 import net.minestom.server.utils.Position;
 import net.minestom.server.world.biomes.Biome;
 import org.slf4j.Logger;
@@ -58,13 +59,14 @@ public class Loader {
         c.set("test", 1);
         c.save(DataType.YAML);
         logger.info(c.getString("test"));
-    }
+    } //hele zítra to zkusíme v eclipse, v tomto se mi dělá úplně nia.. :D
 
     public static int getHighestY(int x, int z){
-        int y = 64;
-            for(int i = y; i < 256; ++i){
-                logger.info(instanceContainer.getBlockStateId(x, i, z)+"");
-            }
+        int y = 0;
+        for(int i = 0; i < 256; ++i){
+            //toto mrazí celý thread
+            logger.info(instanceContainer.getBlockData(new BlockPosition(x, i, z)).getKeys()+"");
+        }
         //instanceContainer.getBlockData(x, i, z).getKeys();
         return y;
     }
@@ -72,7 +74,7 @@ public class Loader {
     static Random random = new Random();
 
     private static class GeneratorDemo implements ChunkGenerator {
-        private JNoise noise = JNoise.newBuilder().openSimplex().build();
+        private JNoise noise = JNoise.newBuilder().combined().build();
         @Override
         public void generateChunkData(ChunkBatch batch, int chunkX, int chunkZ) {
             for (byte x = 0; x < Chunk.CHUNK_SIZE_X; x++) {
