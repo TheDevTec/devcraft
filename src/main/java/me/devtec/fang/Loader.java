@@ -10,6 +10,7 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChatEvent;
+import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.extras.optifine.OptifineSupport;
 import net.minestom.server.instance.Instance;
@@ -52,7 +53,11 @@ public class Loader {
             final Player player = event.getPlayer();
             logger.info("Logging to the game "+player.getUsername());
             event.setSpawningInstance((Instance)Ref.get(getWorlds().get(0), "world"));
-            player.setRespawnPoint(new Position(0, w.get(0).getHighestY(0, 0), 0));
+            player.setRespawnPoint(new Position(0, 64, 0));
+        });
+        globalEventHandler.addEventCallback(PlayerDisconnectEvent.class, event -> {
+            final Player player = event.getPlayer();
+            logger.info("Disconnected from the game "+player.getUsername());
         });
         globalEventHandler.addEventCallback(PlayerChatEvent.class, event -> {
             final Player player = event.getSender();

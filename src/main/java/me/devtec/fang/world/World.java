@@ -2,7 +2,6 @@ package me.devtec.fang.world;
 
 import de.articdive.jnoise.JNoise;
 import de.articdive.jnoise.interpolation.InterpolationType;
-import me.devtec.fang.Loader;
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
 import net.minestom.server.MinecraftServer;
@@ -247,11 +246,5 @@ public class World {
 
     public void unloadChunk(int x, int z) {
         world.unloadChunk(x, z);
-    }
-
-    public float getHighestY(int x, int z) {
-        Chunk c = getChunkAt(x>>4, z>>4);
-        Loader.logger.info(c.getCustomBlock(0, 0, 0).getIdentifier());
-        return 64;
     }
 }
