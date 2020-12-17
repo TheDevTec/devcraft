@@ -437,7 +437,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 				if (a == null)
 					return this;
 				OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream(a), StandardCharsets.UTF_8);
-				if (type == DataType.DATA || type == DataType.BYTE) {
+				if (type == DataType.BYTE) {
 					try {
 						ByteArrayDataOutput bos = ByteStreams.newDataOutput(loader.get().size());
 						for (Entry<String, DataHolder> key : loader.get().entrySet())
@@ -446,8 +446,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 								bos.writeUTF(Writer.write(key.getValue().getValue()));
 							} catch (Exception er) {
 							}
-						w.write(type == DataType.DATA ? bos.toString()
-								: Base64.getEncoder().encodeToString(bos.toByteArray()));
+						w.write(Base64.getEncoder().encodeToString(bos.toByteArray()));
 						w.close();
 					} catch (Exception e) {
 						w.write("");
@@ -550,7 +549,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 	}
 
 	public String toString() {
-		return toString(DataType.DATA);
+		return toString(DataType.BYTE);
 	}
 
 	private void addKeys(Maker main, String key) {
@@ -601,7 +600,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 
 	public String toString(DataType type) {
 		synchronized (loader) {
-			if (type == DataType.DATA || type == DataType.BYTE) {
+			if (type == DataType.BYTE) {
 				try {
 					ByteArrayDataOutput bos = ByteStreams.newDataOutput(loader.get().size());
 					for (Entry<String, DataHolder> key : loader.get().entrySet())
@@ -610,8 +609,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 							bos.writeUTF(Writer.write(key.getValue().getValue()));
 						} catch (Exception er) {
 						}
-					return type == DataType.DATA ? bos.toString()
-							: Base64.getEncoder().encodeToString(bos.toByteArray());
+					return Base64.getEncoder().encodeToString(bos.toByteArray());
 				} catch (Exception e) {
 				}
 				return "";

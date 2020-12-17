@@ -51,13 +51,13 @@ public class Loader {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addEventCallback(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
-            logger.info("Logging to the game "+player.getUsername());
-            event.setSpawningInstance((Instance)Ref.get(getWorlds().get(0), "world"));
+            logger.info(player.getUsername() + " joined the game.");
+            event.setSpawningInstance((Instance) Ref.get(getWorlds().get(0), "world"));
             player.setRespawnPoint(new Position(0, 64, 0));
         });
         globalEventHandler.addEventCallback(PlayerDisconnectEvent.class, event -> {
             final Player player = event.getPlayer();
-            logger.info("Disconnected from the game "+player.getUsername());
+            logger.info(player.getUsername() + " disconnected from the game.");
         });
         globalEventHandler.addEventCallback(PlayerChatEvent.class, event -> {
             final Player player = event.getSender();

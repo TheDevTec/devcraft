@@ -4,6 +4,7 @@ import me.devtec.fang.data.collections.UnsortedList;
 import me.devtec.fang.data.json.Reader;
 import me.devtec.fang.data.json.Writer;
 import me.devtec.fang.data.maps.UnsortedMap;
+import net.minestom.server.chat.ColoredText;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -218,7 +219,7 @@ public class StringUtils {
     public static String colorize(String msg) {
         if (msg == null)
             return null;
-        return msg.replace("&", "§"); //TODO
+        return ColoredText.ofLegacy(msg, '&').toString();
     }
 
     /**
