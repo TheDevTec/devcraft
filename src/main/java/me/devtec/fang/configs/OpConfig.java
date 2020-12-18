@@ -14,7 +14,7 @@ public class OpConfig {
 
     public void removeOp(String name){
         if (data.exists(name)){
-            data.remove(name);
+            data.set(name, null);
             data.save(DataType.YAML);
         }
     }

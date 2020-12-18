@@ -22,7 +22,7 @@ public class GamemodeCommand extends Command {
     ServerProperties p = new ServerProperties();
 
     public GamemodeCommand() {
-        super("gamemode", "g", "gm");
+        super("gamemode");
 
         setCondition(this::isAllowed);
 
