@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class ServerProperties {
 
-    private static Data c = new Data("server-properties.yml");
+    private static Data c = new Data("server.properties");
 
     public final void Setup(){
         c.addDefault("view-distance.chunk", 6, Arrays.asList("# View distance of chunks (Defaulty 6)"));
@@ -29,7 +29,7 @@ public class ServerProperties {
         c.save(DataType.YAML);
     }
 
-    public Data get(){
+    public static Data get(){
         return c;
     }
 

@@ -4,6 +4,7 @@ import de.articdive.jnoise.JNoise;
 import de.articdive.jnoise.interpolation.InterpolationType;
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
+import me.devtec.fang.world.structure.Tree;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.ChunkGenerator;
@@ -47,90 +48,6 @@ public class World {
     }
 
     private static class Generator implements ChunkGenerator {
-          static Structure  tree = new Structure();
-        static{
-                tree.addBlock(Block.DIRT, 0, -1, 0);
-            for(int i = 0; i < 4; ++i)
-                tree.addBlock(Block.OAK_LOG, 0, i, 0);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 1, 0);
-                tree.addBlock(Block.OAK_LEAVES, 2, 1, 0);
-                tree.addBlock(Block.OAK_LEAVES, -1, 1, 0);
-                tree.addBlock(Block.OAK_LEAVES, -2, 1, 0);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 1, 1);
-                tree.addBlock(Block.OAK_LEAVES, 2, 1, 1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 1, 1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 1, 1);
-                tree.addBlock(Block.OAK_LEAVES, -2, 1, 1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 1, 2);
-                tree.addBlock(Block.OAK_LEAVES, 2, 1, 2);
-                tree.addBlock(Block.OAK_LEAVES, 0, 1, 2);
-                tree.addBlock(Block.OAK_LEAVES, -1, 1, 2);
-                tree.addBlock(Block.OAK_LEAVES, -2, 1, 2);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 1, -1);
-                tree.addBlock(Block.OAK_LEAVES, 2, 1, -1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 1, -1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 1, -1);
-                tree.addBlock(Block.OAK_LEAVES, -2, 1, -1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 1, -2);
-                tree.addBlock(Block.OAK_LEAVES, 2, 1, -2);
-                tree.addBlock(Block.OAK_LEAVES, 0, 1, -2);
-                tree.addBlock(Block.OAK_LEAVES, -1, 1, -2);
-                tree.addBlock(Block.OAK_LEAVES, -2, 1, -2);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 2, 0);
-                tree.addBlock(Block.OAK_LEAVES, 2, 2, 0);
-                tree.addBlock(Block.OAK_LEAVES, -1, 2, 0);
-                tree.addBlock(Block.OAK_LEAVES, -2, 2, 0);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 2, 1);
-                tree.addBlock(Block.OAK_LEAVES, 2, 2, 1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 2, 1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 2, 1);
-                tree.addBlock(Block.OAK_LEAVES, -2, 2, 1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 2, 2);
-                tree.addBlock(Block.OAK_LEAVES, 2, 2, 2);
-                tree.addBlock(Block.OAK_LEAVES, 0, 2, 2);
-                tree.addBlock(Block.OAK_LEAVES, -1, 2, 2);
-                tree.addBlock(Block.OAK_LEAVES, -2, 2, 2);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 2, -1);
-                tree.addBlock(Block.OAK_LEAVES, 2, 2, -1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 2, -1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 2, -1);
-                tree.addBlock(Block.OAK_LEAVES, -2, 2, -1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 2, -2);
-                tree.addBlock(Block.OAK_LEAVES, 2, 2, -2);
-                tree.addBlock(Block.OAK_LEAVES, 0, 2, -2);
-                tree.addBlock(Block.OAK_LEAVES, -1, 2, -2);
-                tree.addBlock(Block.OAK_LEAVES, -2, 2, -2);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 3, 0);
-                tree.addBlock(Block.OAK_LEAVES, -1, 3, 0);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 3, 1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 3, 1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 3, 1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 3, -1);
-                tree.addBlock(Block.OAK_LEAVES, 0, 3, -1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 3, -1);
-
-                tree.addBlock(Block.OAK_LEAVES, 1, 4, 0);
-                tree.addBlock(Block.OAK_LEAVES, 0, 4, 0);
-                tree.addBlock(Block.OAK_LEAVES, -1, 4, 0);
-
-                tree.addBlock(Block.OAK_LEAVES, 0, 4, 1);
-
-                tree.addBlock(Block.OAK_LEAVES, 0, 4, -1);
-                tree.addBlock(Block.OAK_LEAVES, -1, 4, -1);
-        }
         public Generator(long seed){
             abnormal = JNoise.newBuilder().perlin().setInterpolation(InterpolationType.LINEAR).setSeed((int)seed).setFrequency(0.8).build();
             abnormalHill = JNoise.newBuilder().perlin().setInterpolation(InterpolationType.LINEAR).setSeed((int)seed+1).setFrequency(1.2).build();
@@ -187,7 +104,10 @@ public class World {
             return list;
         }
 
+        static me.devtec.fang.world.structure.Structure tree = new Tree.Oak();
         private class TreePopulator implements ChunkPopulator {
+
+
             //todo improve
             @Override
             public void populateChunk(ChunkBatch batch, Chunk chunk) {
@@ -195,7 +115,7 @@ public class World {
                     for (int j = -2; j < 18; j++) {
                         if (abnormalHill.getNoise(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16) > 0.75) {
                             int y = getHeight(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16);
-                            tree.build(batch, new BlockPosition(i, y, j));
+                            tree.load(batch, new BlockPosition(i, y, j));
                         }
                     }
                 }

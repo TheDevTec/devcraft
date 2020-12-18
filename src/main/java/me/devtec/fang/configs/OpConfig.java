@@ -2,14 +2,10 @@ package me.devtec.fang.configs;
 
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
-import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
-
-import java.util.UUID;
 
 public class OpConfig {
 
-    private Data data = new Data("/configs/ops.yml");
+    private Data data = new Data("configs/ops.yml");
 
     public void addOp(String name, int level){
         data.set(name, level);
@@ -18,7 +14,7 @@ public class OpConfig {
 
     public void removeOp(String name){
         if (data.exists(name)){
-            data.set(name, null);
+            data.remove(name);
             data.save(DataType.YAML);
         }
     }
@@ -34,11 +30,7 @@ public class OpConfig {
     */
 
     public int getOpLevel(String name){
-        if (data.exists(name)){
-            return data.getInt(name);
-        } else {
-            return 0;
-        }
+        return data.getInt(name);
     }
 
 }
