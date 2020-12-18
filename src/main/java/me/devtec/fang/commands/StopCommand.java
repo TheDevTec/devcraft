@@ -10,15 +10,17 @@ import net.minestom.server.storage.StorageLocation;
 import net.minestom.server.utils.cache.TemporaryCache;
 import net.minestom.server.utils.thread.MinestomThread;
 
-public class Stop extends Command {
+public class StopCommand extends Command {
 
-    public Stop() {
+    public StopCommand() {
         super("stop");
         setDefaultExecutor(new CommandExecutor() {
             @Override
             public void apply(CommandSender sender, Arguments args) {
+
                 sender.sendMessage("Stopping of server..");
                 Loader.getWorlds().forEach(world -> world.save());
+                /*
                 MinecraftServer.getUpdateManager().stop();
                 MinecraftServer.getSchedulerManager().shutdown();
                 MinecraftServer.getConnectionManager().shutdown();
@@ -28,7 +30,10 @@ public class Stop extends Command {
                 MinecraftServer.getBenchmarkManager().disable();
                 MinecraftServer.getCommandManager().stopConsoleThread();
                 TemporaryCache.REMOVER_SERVICE.shutdown();
+                */
+                MinecraftServer.stopCleanly();
                 MinestomThread.shutdownAll();
+                System.exit(1);
             }
         });
     }

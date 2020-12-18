@@ -49,6 +49,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.1")
 
     implementation("com.github.cliftonlabs:json-simple:3.1.0")
+
+    implementation("com.mojang:brigadier:1.0.17")
 }
 
 tasks {
