@@ -107,7 +107,8 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		DataHolder h = loader.get().getOrDefault(key, null);
 		if (h == null) {
 			h = new DataHolder();
-			aw.add(key.split("\\.")[0]);
+			if(!aw.contains(key.split("\\.")[0]))
+				aw.add(key.split("\\.")[0]);
 			loader.set(key, h);
 		}
 		return h;
@@ -221,17 +222,16 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		aw.clear();
 		loader = DataLoader.findLoaderFor(input); // get & load
 		for (String k : loader.getKeys())
-			aw.add(k.split("\\.")[0]);
+			if(!aw.contains(k.split("\\.")[0]))
+				aw.add(k.split("\\.")[0]);
 		return this;
 	}
 
 	public Data reload(File f) {
 		if (!f.exists()) {
-
-			try {
+			File parent = f.getParentFile();
+			if(parent!=null)
 				f.getParentFile().mkdirs();
-			} catch (Exception e) {
-			}
 			try {
 				f.createNewFile();
 			} catch (Exception e) {
