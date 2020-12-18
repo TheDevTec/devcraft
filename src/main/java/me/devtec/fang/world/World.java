@@ -139,18 +139,9 @@ public class World {
 
         public int getHeight(int x, int z) {
 
-            FastNoiseLite noisy = new FastNoiseLite();
-            noisy.SetNoiseType(FastNoiseLite.NoiseType.OpenSimplex2S);
-            noisy.SetFractalOctaves(100);
-            noisy.SetFrequency((float)0.01);
-
-            double noise = 1*noisy.GetNoise((float)(x / 16.0)*32,(float)(z / 16.0)*32);
-            noise = noise + 0.5*noisy.GetNoise((float)(x / 16.0)*48,(float)(z / 16.0)*48);
-            noise = noise + 0.25*noisy.GetNoise((float)(x / 16.0)*64,(float)(z / 16.0)*64);
-
             double preHeight = 1*abnormal.getNoise(x / 16.0, z / 16.0);
             preHeight = preHeight + 0.5*abnormal.getNoise(x / 8.0, z / 8.0);
-            preHeight = noise + preHeight;
+            preHeight = preHeight + 0.25*abnormal.getNoise(x / 4.0, z / 4.0);
 
             return (int) ((preHeight > 0 ? preHeight * 6 : preHeight * 4) + 64);
         }
