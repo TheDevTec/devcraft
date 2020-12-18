@@ -2,12 +2,13 @@ package me.devtec.fang.world;
 
 import de.articdive.jnoise.JNoise;
 import de.articdive.jnoise.interpolation.InterpolationType;
-import me.devtec.fang.configs.ServerProperties;
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
-import me.devtec.fang.world.noise.FastNoiseLite;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.instance.*;
+import net.minestom.server.instance.Chunk;
+import net.minestom.server.instance.ChunkGenerator;
+import net.minestom.server.instance.ChunkPopulator;
+import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.storage.StorageLocation;
@@ -131,21 +132,14 @@ public class World {
                 tree.addBlock(Block.OAK_LEAVES, -1, 4, -1);
         }
         public Generator(long seed){
-
             abnormal = JNoise.newBuilder().perlin().setInterpolation(InterpolationType.LINEAR).setSeed((int)seed).setFrequency(0.8).build();
             abnormalHill = JNoise.newBuilder().perlin().setInterpolation(InterpolationType.LINEAR).setSeed((int)seed+1).setFrequency(1.2).build();
         }
         private final JNoise abnormal, abnormalHill;
-
         public int getHeight(int x, int z) {
-
-            double preHeight = 1*abnormal.getNoise(x / 16.0, z / 16.0);
-            preHeight = preHeight + 0.5*abnormal.getNoise(x / 8.0, z / 8.0);
-            preHeight = preHeight + 0.25*abnormal.getNoise(x / 4.0, z / 4.0);
-
+            double preHeight = abnormal.getNoise(x / 16.0, z / 16.0);
             return (int) ((preHeight > 0 ? preHeight * 6 : preHeight * 4) + 64);
         }
-
 
         @Override
         public void generateChunkData(@NotNull ChunkBatch batch, int chunkX, int chunkZ) {
@@ -153,6 +147,11 @@ public class World {
                 for (int z = 0; z < Chunk.CHUNK_SIZE_Z; z++) {
                     final int height = getHeight(x + chunkX * 16, z + chunkZ * 16);
                     for (int y = 0; y < height; y++) {
+                        //if (random.nextInt(100) > 10) {
+                        //    batch.setBlock(x, y, z, Block.DIAMOND_BLOCK);
+                        //} else {
+                        //    batch.setBlock(x, y, z, Block.GOLD_BLOCK);
+                        //}
                         if (y == 0) {
                             batch.setBlock(x, y, z, Block.BEDROCK);
                         } else if (y == height - 1) {
