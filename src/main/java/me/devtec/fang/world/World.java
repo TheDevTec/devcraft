@@ -187,6 +187,11 @@ public class World {
 
         private class TreePopulator implements ChunkPopulator {
             //todo improve
+            /**
+             * reminder
+             * https://bukkit.gamepedia.com/Developing_a_World_Generator_Plugin#Create_a_custom_chunk_generator
+             * https://www.redblobgames.com/maps/terrain-from-noise/
+            */
             @Override
             public void populateChunk(ChunkBatch batch, Chunk chunk) {
                 for (int i = -2; i < 18; i++) {
