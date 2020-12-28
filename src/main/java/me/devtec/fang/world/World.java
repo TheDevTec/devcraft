@@ -18,6 +18,7 @@ import java.io.File;
 public class World {
     private final String name;
     private final long seed;
+    private static long seedStat;
     protected final InstanceContainer world;
 
     public void setBlock(BlockPosition pos, Block block) {
@@ -44,8 +45,10 @@ public class World {
             d.set("seed", seed);
             d.save(DataType.YAML);
             this.seed = seed;
+            seedStat = seed;
         } else {
             this.seed = new Data(name + "/IDENTITY").getLong("seed");
+            seedStat = new Data(name + "/IDENTITY").getLong("seed");
         }
         StorageLocation storageLocation = MinecraftServer.getStorageManager().getLocation(name, new StorageOptions().setCompression(true));
         world = MinecraftServer.getInstanceManager().createInstanceContainer(type, storageLocation);
@@ -59,6 +62,9 @@ public class World {
 
     public long getSeed(){
         return seed;
+    }
+    public static long getSeedStat(){
+        return seedStat;
     }
 
     public String getName(){
@@ -75,6 +81,14 @@ public class World {
 
     public Chunk getChunkAt(int x, int z){
         return world.getChunk(x, z);
+    }
+
+    public short getBlockStateIdAt(int x, int y, int z){
+        return world.getBlockStateId(x, y, z);
+    }
+
+    public Block getBlockMaterialAt(int x, int y, int z){
+        return Block.fromStateId(getBlockStateIdAt(x, y, z));
     }
 
     public void unloadChunk(int x, int z) {

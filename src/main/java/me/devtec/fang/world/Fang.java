@@ -41,15 +41,15 @@ public class Fang {
 
     public static World createWorld(String name) {
         long seed = new Random().nextLong();
-        return createWorld(name, new Normal(seed), DimensionType.OVERWORLD, seed);
+        return createWorld(name, new Normal(), DimensionType.OVERWORLD, seed);
     }
 
     public static World createWorld(String name, long seed) {
-        return createWorld(name, new Normal(seed), DimensionType.OVERWORLD, seed);
+        return createWorld(name, new Normal(), DimensionType.OVERWORLD, seed);
     }
 
     public static World createWorld(String name, DimensionType dimensionType, long seed) {
-        return createWorld(name, new Normal(seed), dimensionType, seed);
+        return createWorld(name, new Normal(), dimensionType, seed);
     }
 
     public static World createWorld(String name, ChunkGenerator generator, DimensionType dimensionType, long seed) {

@@ -4,7 +4,6 @@ import me.devtec.fang.configs.OpConfig;
 import me.devtec.fang.configs.ServerProperties;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.command.CommandSender;
-import net.minestom.server.command.ConsoleSender;
 import net.minestom.server.command.builder.*;
 import net.minestom.server.command.builder.arguments.Argument;
 import net.minestom.server.command.builder.arguments.ArgumentType;

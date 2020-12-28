@@ -7,6 +7,7 @@ import me.devtec.fang.commands.StopCommand;
 import me.devtec.fang.configs.ServerProperties;
 import me.devtec.fang.data.Ref;
 import me.devtec.fang.world.Fang;
+import me.devtec.fang.world.biome.Temperature;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
@@ -18,17 +19,16 @@ import net.minestom.server.extras.optifine.OptifineSupport;
 import net.minestom.server.extras.velocity.VelocityProxy;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.storage.systems.FileStorageSystem;
-import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.Position;
 import net.minestom.server.world.Difficulty;
 import net.minestom.server.world.DimensionType;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
 import java.util.Random;
 
 public class Loader {
+
     public static void log(String text) {
         System.out.println("[Fang] [" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + "] " + text);
     }
@@ -55,6 +55,7 @@ public class Loader {
         MinecraftServer.setMaxPacketSize(p.get().getInt("server.packet-maxSize"));
         MinecraftServer.setDifficulty(Difficulty.valueOf(p.get().getString("server.difficulty").toUpperCase()));
         Fang.createWorld(p.get().getString("server.level"), DimensionType.OVERWORLD, new Random().nextLong());
+        /*
         Fang.createWorld(p.get().getString("server.level") + "_nether", DimensionType.builder(NamespaceID.from("minecraft:nether"))
                 .ultrawarm(false)
                 .natural(true)
@@ -81,12 +82,7 @@ public class Loader {
                 .ambientLight(0.0f)
                 .logicalHeight(256)
                 .build(), new Random().nextLong());
-
-        //LOAD COMMANDS
-        MinecraftServer.getCommandManager().register(new StopCommand());
-        MinecraftServer.getCommandManager().register(new OpCommand());
-        MinecraftServer.getCommandManager().register(new DeopCommand());
-        MinecraftServer.getCommandManager().register(new GamemodeCommand());
+        */
 
         //HOOK LOGGER
         GlobalEventHandler events = MinecraftServer.getGlobalEventHandler();
@@ -94,14 +90,18 @@ public class Loader {
             final Player player = event.getPlayer();
             log(player.getUsername() + " joined the game.");
             event.setSpawningInstance((Instance) Ref.get(Fang.getWorld("world"), "world"));
-            player.setRespawnPoint(new Position(0, 64, 0));
+            player.setRespawnPoint(new Position(0, 100, 0));
         });
         events.addEventCallback(PlayerDisconnectEvent.class, event -> {
             log(event.getPlayer().getUsername() + " disconnected from the game.");
         });
+
+
         events.addEventCallback(PlayerChatEvent.class, event -> {
             log(event.getSender().getUsername() + ": " + event.getMessage());
         });
+
+
 
         OptifineSupport.enable();
         switch (p.get().getString("server.type").toUpperCase()) {
@@ -118,5 +118,11 @@ public class Loader {
 
         minecraftServer.start(p.get().getString("server.ip"), p.get().getInt("server.port"));
         log("Server loaded in " + (System.currentTimeMillis() - start) + "ms");
+
+        //LOAD COMMANDS
+        MinecraftServer.getCommandManager().register(new StopCommand());
+        MinecraftServer.getCommandManager().register(new OpCommand());
+        MinecraftServer.getCommandManager().register(new DeopCommand());
+        MinecraftServer.getCommandManager().register(new GamemodeCommand());
     }
 }
