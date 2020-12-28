@@ -1,6 +1,6 @@
 # Fang
 
-![logo](https://github.com/TheDevTec/fang/resources/logo.png "Logo Title Text 1")
+![logo](https://raw.githubusercontent.com/TheDevTec/fang/origin/resources/logo.png "Logo Title Text 1")
 
 ## Installation
 
