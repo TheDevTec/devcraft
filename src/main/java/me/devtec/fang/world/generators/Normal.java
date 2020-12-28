@@ -8,9 +8,11 @@ import me.devtec.fang.world.structure.Tree;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.ChunkGenerator;
 import net.minestom.server.instance.ChunkPopulator;
+import net.minestom.server.instance.MinestomBasicChunkLoader;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.utils.NamespaceID;
+import net.minestom.server.utils.thread.MinestomThread;
 import net.minestom.server.world.biomes.Biome;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,7 +41,7 @@ public class Normal implements ChunkGenerator {
                     int posX = (chunkX * 16) + x;
                     int posZ = (chunkZ * 16) + z;
 
-                    double Y = getNoise.getY(posX, posZ) + 40; //+40 accounts for raising oceans to y=63
+                    double Y = getNoise.getY(posX, posZ) + 30; //+y accounts for raising oceans to y=63
 
                     for (int i = 0; i < Y; i++) {
 
@@ -56,6 +58,8 @@ public class Normal implements ChunkGenerator {
                     biomeTypes.decideBiome(batch, posX, (int) Y, posZ, x, z);
                 }
             }
+
+
     }
 
     @Override

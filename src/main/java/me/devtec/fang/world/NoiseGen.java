@@ -47,10 +47,10 @@ public class NoiseGen {
     public JNoise HeightNoiseFour(){
         return HeightNoiseFour;
     }
-    public JNoise StabilizerNoiseOne(){
+    private JNoise StabilizerNoiseOne(){
         return StabilizerNoiseOne;
     }
-    public JNoise StabilizerNoiseTwo(){
+    private JNoise StabilizerNoiseTwo(){
         return StabilizerNoiseTwo;
     }
 
@@ -67,7 +67,7 @@ public class NoiseGen {
         double ratio = 1.5 + getStabilizerNoiseTwo(X, Z);
         int noise = (int) (64 + (HeightNoiseOne().getNoise(X, Z) * 32) + (HeightNoiseTwo().getNoise(X, Z) * 16) + (HeightNoiseThree().getNoise(X, Z) * 8) + (HeightNoiseFour().getNoise(X, Z) * 4));
         //noise *= getNoise.defaultNoise(X, Z)*ratio;
-        noise *= getStabilizerNoiseOne(X, Z)*ratio;
+        noise *= ((getStabilizerNoiseOne(X, Z)+1)/3.5)*ratio;
         return noise;
     }
 

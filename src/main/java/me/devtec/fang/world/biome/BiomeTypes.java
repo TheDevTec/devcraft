@@ -9,7 +9,7 @@ public class BiomeTypes {
     Temperature temperature = new Temperature();
 
     public void decideBiome(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        int temp = temperature.getTemp(X, Z);
+        int temp = temperature.getTemp(X, Z)%100;
         if (temp >= 50){
             Plains(batch, inChunkX, Y, inChunkZ);
         } else {
