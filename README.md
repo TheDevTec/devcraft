@@ -19,7 +19,7 @@ With `-Xms` being the minimum amount of ram you want to use,
 Create a folder, then
 Clone the repository using:
 
-`git clone https://github.com/TheDevTec/Fang.git`
+`git clone https://github.com/TheDevTec/fang.git`
 
 Once it is cloned, make sure you have gradle installed, and run
 
