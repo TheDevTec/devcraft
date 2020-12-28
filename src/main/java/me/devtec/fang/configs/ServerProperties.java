@@ -16,6 +16,8 @@ public class ServerProperties {
         c.addDefault("server.ip", "localhost", Collections.singletonList("# Server IP (Defaulty localhost)"));
         c.addDefault("server.port", 25565, Collections.singletonList("# Server port (Defaulty 25565)"));
         c.addDefault("server.online-mode", true, Collections.singletonList("# Protect the server with online-mode and prevent connections from the warez players"));
+        c.addDefault("server.max-players", 10, Collections.singletonList("# Maximum of players on the server"));
+        c.addDefault("server.motd", "Fang server", Collections.singletonList("# Server motd"));
         c.addDefault("server.rate", 300, Collections.singletonList("# Rate limit of server (Defaulty 300)"));
         c.addDefault("server.netty-threads", 4, Collections.singletonList("# Count of Netty threads (Defaulty 4)"));
         c.addDefault("server.netty-compressions-threshold", 512, Collections.singletonList("# Compression of threshold (Defaulty 512, For BungeeCord use value -1)"));

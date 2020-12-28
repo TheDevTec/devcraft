@@ -70,7 +70,6 @@ public class Normal implements ChunkGenerator {
         return list;
     }
 
-    static me.devtec.fang.world.structure.Structure tree = new Tree(5, Block.DIRT, Block.OAK_LOG, Block.OAK_LEAVES);
     private class TreePopulator implements ChunkPopulator {
         @Override
         public void populateChunk(ChunkBatch batch, Chunk chunk) {

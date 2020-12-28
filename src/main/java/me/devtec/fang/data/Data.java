@@ -180,8 +180,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		if (value == null || key == null)
 			return this;
 		DataHolder h = getOrCreateData(key);
-		if (h.lines != null)
-			h.lines.remove(value);
+		h.lines.remove(value);
 		return this;
 	}
 
@@ -189,8 +188,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		if (line < 0 || key == null)
 			return this;
 		DataHolder h = getOrCreateData(key);
-		if (h.lines != null)
-			h.lines.remove(line);
+		h.lines.remove(line);
 		return this;
 	}
 
@@ -356,7 +354,7 @@ public class Data implements me.devtec.fang.data.datas.Data {
 		for (Object o : items)
 			try {
 				if (o != null)
-					list.add(o == null ? null : (E)clazz.cast(o));
+					list.add((E)clazz.cast(o));
 				else
 					list.add(null);
 			} catch (Exception er) {
@@ -607,43 +605,41 @@ public class Data implements me.devtec.fang.data.datas.Data {
 	}
 
 	public String toString(DataType type) {
-		synchronized (loader) {
-			if (type == DataType.BYTE) {
-				try {
-					ByteArrayDataOutput bos = ByteStreams.newDataOutput(loader.get().size());
-					for (Entry<String, DataHolder> key : loader.get().entrySet())
-						try {
-							bos.writeUTF(key.getKey());
-							bos.writeUTF(Writer.write(key.getValue().getValue()));
-						} catch (Exception er) {
-						}
-					return Base64.getEncoder().encodeToString(bos.toByteArray());
-				} catch (Exception e) {
-				}
-				return "";
-			}
-			if (type == DataType.JSON) {
-				Maker main = new Maker();
-				for (String key : aw)
-					addKeys(main, key);
-				return main.toString();
-			}
-
-			StringWriter d = new StringWriter();
+		if (type == DataType.BYTE) {
 			try {
-				for (String h : loader.getHeader())
-					d.write(h + System.lineSeparator());
-			} catch (Exception er) {
+				ByteArrayDataOutput bos = ByteStreams.newDataOutput(loader.get().size());
+				for (Entry<String, DataHolder> key : loader.get().entrySet())
+					try {
+						bos.writeUTF(key.getKey());
+						bos.writeUTF(Writer.write(key.getValue().getValue()));
+					} catch (Exception er) {
+					}
+				return Base64.getEncoder().encodeToString(bos.toByteArray());
+			} catch (Exception e) {
 			}
-			for (String key : aw)
-				preparePath(key, key + ":", 0, d);
-			try {
-				for (String h : loader.getFooter())
-					d.write(h + System.lineSeparator());
-			} catch (Exception er) {
-			}
-			return d.toString();
+			return "";
 		}
+		if (type == DataType.JSON) {
+			Maker main = new Maker();
+			for (String key : aw)
+				addKeys(main, key);
+			return main.toString();
+		}
+
+		StringWriter d = new StringWriter();
+		try {
+			for (String h : loader.getHeader())
+				d.write(h + System.lineSeparator());
+		} catch (Exception er) {
+		}
+		for (String key : aw)
+			preparePath(key, key + ":", 0, d);
+		try {
+			for (String h : loader.getFooter())
+				d.write(h + System.lineSeparator());
+		} catch (Exception er) {
+		}
+		return d.toString();
 	}
 
 	private static String cs(int s, int doubleSpace) {

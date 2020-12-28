@@ -11,6 +11,7 @@ plugins {
 }
 
 repositories {
+
     // Use jcenter for resolving dependencies.
     jcenter()
 
@@ -60,6 +61,7 @@ tasks {
             attributes (
                     "Main-Class" to "me.devtec.fang.Loader",
                     "Multi-Release" to true
+
             )
         }
     }
