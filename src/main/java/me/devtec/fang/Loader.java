@@ -98,7 +98,7 @@ public class Loader {
 
 
         events.addEventCallback(PlayerChatEvent.class, event -> {
-            log(event.getSender().getUsername() + ": " + event.getMessage());
+            log(event.getPlayer().getUsername() + ": " + event.getMessage());
         });
 
 

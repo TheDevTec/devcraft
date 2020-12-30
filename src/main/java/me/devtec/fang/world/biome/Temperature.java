@@ -1,21 +1,20 @@
 package me.devtec.fang.world.biome;
 
 import me.devtec.fang.world.NoiseGen;
+import me.devtec.fang.world.generators.Normal;
 
 public class Temperature {
 
-
-
     NoiseGen noiseGen = new NoiseGen();
+    private static final int modifier = Normal.getModifier();
 
-    public int getTemp(int ChunkX, int ChunkZ){
+    public int getTemp(int X, int Z){
 
-        double val = noiseGen.temperatureNoise(ChunkX, ChunkZ);
-        val = (val+1)/2;
+        double val = noiseGen.temperatureNoise(X, Z);
 
-        return (int)(val*100);
-
-
+        int returnVal = (int)(val*100) %100;
+        //Loader.log(String.valueOf(returnVal));
+        return returnVal;
     }
 
 }

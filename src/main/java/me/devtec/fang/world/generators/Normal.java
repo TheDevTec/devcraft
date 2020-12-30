@@ -23,7 +23,10 @@ import java.util.Random;
 
 public class Normal implements ChunkGenerator {
 
-    Random random = new Random();
+    private final static int modifier = 30;
+    public static int getModifier(){
+        return modifier;
+    }
 
     NoiseGen getNoise = new NoiseGen();
     Temperature temperature = new Temperature();
@@ -36,28 +39,28 @@ public class Normal implements ChunkGenerator {
     @Override
     public void generateChunkData(@NotNull ChunkBatch batch, int chunkX, int chunkZ) {
 
-            for (byte x = 0; x < Chunk.CHUNK_SIZE_X; x++) {
-                for (byte z = 0; z < Chunk.CHUNK_SIZE_Z; z++) {
-                    int posX = (chunkX * 16) + x;
-                    int posZ = (chunkZ * 16) + z;
+        for (byte x = 0; x < Chunk.CHUNK_SIZE_X; x++) {
+            for (byte z = 0; z < Chunk.CHUNK_SIZE_Z; z++) {
+                int posX = (chunkX * 16) + x;
+                int posZ = (chunkZ * 16) + z;
 
-                    double Y = getNoise.getY(posX, posZ) + 30; //+y accounts for raising oceans to y=63
+                double Y = getNoise.getY(posX, posZ) + modifier; //+modifier accounts for raising oceans to y=63
 
-                    for (int i = 0; i < Y; i++) {
+                for (int i = 0; i < Y; i++) {
 
-                        batch.setBlock(x, i, z, Block.STONE);
+                    batch.setBlock(x, i, z, Block.STONE);
 
-                    }
-
-                    if (Y < 63) {
-                        for (int i = (int) Y; i < 63; i++) {
-                            batch.setBlock(x, i, z, Block.WATER);
-                        }
-                    }
-
-                    biomeTypes.decideBiome(batch, posX, (int) Y, posZ, x, z);
                 }
+
+                if (Y < 63) {
+                    for (int i = (int) Y; i < 63; i++) {
+                        batch.setBlock(x, i, z, Block.WATER);
+                    }
+                }
+
+                biomeTypes.decideBiomeType(batch, posX, (int) Y, posZ, x, z);
             }
+        }
 
 
     }
@@ -80,7 +83,7 @@ public class Normal implements ChunkGenerator {
             for (int i = 0; i < 16; i++) {
                 for (int j = 0; j < 16; j++) {
                     if (getNoise.getTreeNoise(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16, (float)(0.08)) > 0.90){
-                    //if (NoiseGen.abnormalHill.GetNoise(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16) > 0.90) {
+                        //if (NoiseGen.abnormalHill.GetNoise(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16) > 0.90) {
                         //tree.load(batch, new BlockPosition(i, getNoise.getHeight(i + chunk.getChunkX() * 16, j + chunk.getChunkZ() * 16, (float) 0.08), j));
                     }
                 }
