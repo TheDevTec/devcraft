@@ -7,8 +7,9 @@ import me.devtec.fang.commands.StopCommand;
 import me.devtec.fang.configs.ServerProperties;
 import me.devtec.fang.data.Ref;
 import me.devtec.fang.world.Fang;
-import me.devtec.fang.world.biome.Temperature;
+import me.devtec.fang.world.biome.BiomeProperties;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChatEvent;
@@ -23,7 +24,10 @@ import net.minestom.server.utils.Position;
 import net.minestom.server.world.Difficulty;
 import net.minestom.server.world.DimensionType;
 
+import java.awt.*;
+import java.awt.print.Book;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
@@ -55,6 +59,7 @@ public class Loader {
         MinecraftServer.setMaxPacketSize(p.get().getInt("server.packet-maxSize"));
         MinecraftServer.setDifficulty(Difficulty.valueOf(p.get().getString("server.difficulty").toUpperCase()));
         Fang.createWorld(p.get().getString("server.level"), DimensionType.OVERWORLD, new Random().nextLong());
+        BiomeProperties.registerAllBiomes();
         /*
         Fang.createWorld(p.get().getString("server.level") + "_nether", DimensionType.builder(NamespaceID.from("minecraft:nether"))
                 .ultrawarm(false)
@@ -96,12 +101,9 @@ public class Loader {
             log(event.getPlayer().getUsername() + " disconnected from the game.");
         });
 
-
         events.addEventCallback(PlayerChatEvent.class, event -> {
             log(event.getPlayer().getUsername() + ": " + event.getMessage());
         });
-
-
 
         OptifineSupport.enable();
         switch (p.get().getString("server.type").toUpperCase()) {

@@ -14,6 +14,7 @@ repositories {
 
     // Use jcenter for resolving dependencies.
     jcenter()
+    mavenCentral()
 
     listOf(
             "repo1.maven.org/maven2",
@@ -21,6 +22,7 @@ repositories {
             "libraries.minecraft.net",
             "jitpack.io",
             "jcenter.bintray.com"
+            //"https://oss.sonatype.org/content/repositories/snapshots/"
     ).forEach { maven(url = "https://$it") } // require https for all dependencies
 }
 
@@ -53,6 +55,8 @@ dependencies {
     implementation("com.github.cliftonlabs:json-simple:3.1.0")
 
     implementation("com.mojang:brigadier:1.0.17")
+
+    //implementation("com.github.mworzala:adventure-platform-minestom:f1d1c3adc5")
 }
 
 tasks {

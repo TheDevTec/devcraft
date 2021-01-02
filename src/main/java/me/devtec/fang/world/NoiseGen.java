@@ -105,6 +105,27 @@ public class NoiseGen {
         return noiseLayer;
     }
 
+    public double temperatureNoiseTwo(int x, int z){
+        FastNoiseLite freqCellular = cellular;
+        freqCellular.SetFrequency(0.001f);
+
+        double noiseLayer =  (freqCellular.GetNoise(x, z)+1)/2; /*freqAbnormal.GetNoise(x, z);*/
+
+        cellular.SetFrequency(0.002f);
+        cellular.SetSeed((Seed*564158)/638);
+        noiseLayer += ((cellular.GetNoise(x, z)+1)/2)*0.5;
+
+        cellular.SetFrequency(0.004f);
+        cellular.SetSeed((Seed*185144)/158);
+        noiseLayer += ((cellular.GetNoise(x, z)+1)/2)*0.25;
+
+        cellular.SetFrequency(0.008f);
+        cellular.SetSeed((Seed*451582)/274);
+        noiseLayer += ((cellular.GetNoise(x, z)+1)/2)*0.125;
+
+        return noiseLayer;
+    }
+
     public double customPositiveNoise(int x, int z, float frequency){
         return (customNoiseOne(x, z, frequency) + 1) / 2;
     }

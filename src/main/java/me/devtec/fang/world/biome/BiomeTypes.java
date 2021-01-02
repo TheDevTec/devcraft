@@ -15,19 +15,19 @@ public class BiomeTypes {
     Temperature temperature = new Temperature();
     NoiseGen noiseGen = new NoiseGen();
 
-    private static final int rangeModifier = -50; //shifts balance to hotter side
+    private static final int rangeModifier = 0; //shifts balance to hotter side
 
     private static final int heightModifier = Normal.getModifier();
 
     public void decideBiomeType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        int temp = temperature.getTemp(X, Z);
+        double temp = temperature.getTemp(X, Z);
 
         if (Y >= 63) {
-            if (temp <= -25 + rangeModifier) {
+            if (temp <= 33 + rangeModifier) {
                 SnowyType(batch, X, Y, Z, inChunkX, inChunkZ);
             } else if (temp <= 0 + rangeModifier) {
                 ColdType(batch, X, Y, Z, inChunkX, inChunkZ);
-            } else if (temp <= 25 + rangeModifier) {
+            } else if (temp <= 66 + rangeModifier) {
                 LushType(batch, X, Y, Z, inChunkX, inChunkZ);
             } else /* if (temp > 50) */ {
                 WarmType(batch, X, Y, Z, inChunkX, inChunkZ);
@@ -56,6 +56,7 @@ public class BiomeTypes {
     //SNOWY BIOMES
 
     private void SnowyTundra(@NotNull ChunkBatch batch, int X, int Y, int Z){
+
         batch.setBlock(X, Y, Z, Block.SNOW);
         batch.setBlock(X, Y - 1, Z, Block.GRASS_BLOCK);
         for (int i = Y - 2; i > (Y - 4); i--) {
