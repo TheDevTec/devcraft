@@ -7,6 +7,7 @@ import me.devtec.fang.configs.ServerProperties;
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
 import me.devtec.fang.data.Ref;
+import me.devtec.fang.world.biome.BiomeProperties;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
@@ -44,6 +45,7 @@ public class Loader {
         if (p.get().getBoolean("server.online-mode")) {
             net.minestom.server.extras.MojangAuth.init();
         }
+
         MinecraftServer minecraftServer = MinecraftServer.init();
         MinecraftServer.getStorageManager().defineDefaultStorageSystem(FileStorageSystem::new);
 
@@ -56,6 +58,7 @@ public class Loader {
         MinecraftServer.setMaxPacketSize(p.get().getInt("server.packet-maxSize"));
         MinecraftServer.setDifficulty(Difficulty.valueOf(p.get().getString("server.difficulty").toUpperCase()));
         Fang.createWorld(p.get().getString("server.level"), DimensionType.OVERWORLD, new Random().nextLong());
+        BiomeProperties.registerAllBiomes();
         /*
         Fang.createWorld(p.get().getString("server.level") + "_nether", DimensionType.builder(NamespaceID.from("minecraft:nether"))
                 .ultrawarm(false)

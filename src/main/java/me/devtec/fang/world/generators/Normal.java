@@ -4,6 +4,7 @@ import me.devtec.fang.world.NoiseGen;
 import me.devtec.fang.world.World;
 import me.devtec.fang.world.biome.BiomeProperties;
 import me.devtec.fang.world.biome.BiomeTypes;
+import me.devtec.fang.world.biome.SetBiome;
 import me.devtec.fang.world.biome.Temperature;
 import net.minestom.server.instance.Chunk;
 import net.minestom.server.instance.ChunkGenerator;
@@ -64,7 +65,7 @@ public class Normal implements ChunkGenerator {
 
     @Override
     public void fillBiomes(@NotNull  Biome[] biomes, int chunkX, int chunkZ) {
-        Arrays.fill(biomes, BiomeProperties.getBiomeType(chunkX, chunkZ));
+        Arrays.fill(biomes, SetBiome.getBiomeType(chunkX, chunkZ));
     }
 
     @Override

@@ -21,7 +21,7 @@ public class Temperature {
     public double getTemp(int X, int Z){
 
         //return ((noiseGen.temperatureNoise(X, Z) + 1.875) * 26.66);
-        double val = noiseGen.temperatureNoiseTwo(X, Z)*170.52;
+        double val = noiseGen.temperatureNoise(X, Z)*170.52;
 
         /*
         counter++;

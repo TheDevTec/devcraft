@@ -1,5 +1,6 @@
 package me.devtec.fang.world.biome;
 
+import me.devtec.fang.world.NoiseGen;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.biomes.Biome;
@@ -63,11 +64,7 @@ public class BiomeProperties {
         biomeMan().addBiome(MODIFIED_WOODED_BADLANDS_PLATEAU);
     }
 
-    public static Biome getBiomeType(int chunkX, int ChunkZ){
-        return FOREST;
-    }
-
-    private static final Biome SNOWY_TUNDRA = Biome.builder()
+    public static final Biome SNOWY_TUNDRA = Biome.builder()
             .category(Biome.Category.ICY)
             .name(NamespaceID.from("minecraft:snowy_tundra"))
             .temperature(0.0F)
@@ -77,7 +74,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY)
             .build();
 
-    private static final Biome ICE_SPIKES = Biome.builder()
+    public static final Biome ICE_SPIKES = Biome.builder()
             .category(Biome.Category.ICY)
             .name(NamespaceID.from("minecraft:ice_spikes"))
             .temperature(0.0F)
@@ -87,7 +84,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY)
             .build();
 
-    private static final Biome SNOWY_TAIGA = Biome.builder()
+    public static final Biome SNOWY_TAIGA = Biome.builder()
             .category(Biome.Category.ICY)
             .name(NamespaceID.from("minecraft:snowy_taiga"))
             .temperature(-0.5F)
@@ -97,7 +94,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY)
             .build();
 
-    private static final Biome SNOWY_TAIGA_MOUNTAINS = Biome.builder()
+    public static final Biome SNOWY_TAIGA_MOUNTAINS = Biome.builder()
             .category(Biome.Category.ICY)
             .name(NamespaceID.from("minecraft:snowy_taiga_hills"))
             .temperature(-0.5F)
@@ -107,7 +104,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY)
             .build();
 
-    private static final Biome FROZEN_RIVER = Biome.builder()
+    public static final Biome FROZEN_RIVER = Biome.builder()
             .category(Biome.Category.ICY)
             .name(NamespaceID.from("minecraft:frozen_river"))
             .temperature(0.0F)
@@ -117,7 +114,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY)
             .build();
 
-    private static final Biome SNOWY_BEACH = Biome.builder()
+    public static final Biome SNOWY_BEACH = Biome.builder()
             .category(Biome.Category.BEACH)
             .name(NamespaceID.from("minecraft:snowy_beach"))
             .temperature(0.05F)
@@ -127,7 +124,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SNOWY_BEACH)
             .build();
 
-    private static final Biome MOUNTAINS = Biome.builder()
+    public static final Biome MOUNTAINS = Biome.builder()
             .category(Biome.Category.NONE)
             .name(NamespaceID.from("minecraft:mountains"))
             .temperature(0.2F)
@@ -137,7 +134,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MOUNTAINS)
             .build();
 
-    private static final Biome GRAVELLY_MOUNTAINS = Biome.builder()
+    public static final Biome GRAVELLY_MOUNTAINS = Biome.builder()
             .category(Biome.Category.NONE)
             .name(NamespaceID.from("minecraft:gravelly_mountains"))
             .temperature(0.2F)
@@ -147,7 +144,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MOUNTAINS)
             .build();
 
-    private static final Biome WOODED_MOUNTAINS = Biome.builder()
+    public static final Biome WOODED_MOUNTAINS = Biome.builder()
             .category(Biome.Category.NONE)
             .name(NamespaceID.from("minecraft:wooded_mountains"))
             .temperature(0.2F)
@@ -157,7 +154,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MOUNTAINS)
             .build();
 
-    private static final Biome MODIFIED_GRAVELLY_MOUNTAINS = Biome.builder()
+    public static final Biome MODIFIED_GRAVELLY_MOUNTAINS = Biome.builder()
             .category(Biome.Category.NONE)
             .name(NamespaceID.from("minecraft:modified_gravelly_mountains"))
             .temperature(0.2F)
@@ -167,7 +164,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MOUNTAINS)
             .build();
 
-    private static final Biome TAIGA = Biome.builder()
+    public static final Biome TAIGA = Biome.builder()
             .category(Biome.Category.TAIGA)
             .name(NamespaceID.from("minecraft:taiga"))
             .temperature(0.25F)
@@ -177,7 +174,7 @@ public class BiomeProperties {
             .effects(BiomeTint.TAIGA)
             .build();
 
-    private static final Biome TAIGA_MOUNTAINS = Biome.builder()
+    public static final Biome TAIGA_MOUNTAINS = Biome.builder()
             .category(Biome.Category.TAIGA)
             .name(NamespaceID.from("minecraft:taiga_mountains"))
             .temperature(0.25F)
@@ -187,7 +184,7 @@ public class BiomeProperties {
             .effects(BiomeTint.TAIGA)
             .build();
 
-    private static final Biome GIANT_TREE_TAIGA = Biome.builder()
+    public static final Biome GIANT_TREE_TAIGA = Biome.builder()
             .category(Biome.Category.TAIGA)
             .name(NamespaceID.from("minecraft:giant_tree_taiga"))
             .temperature(0.25F)
@@ -197,7 +194,7 @@ public class BiomeProperties {
             .effects(BiomeTint.GIANT_TREE_TAIGA)
             .build();
 
-    private static final Biome GIANT_SPRUCE_TAIGA = Biome.builder()
+    public static final Biome GIANT_SPRUCE_TAIGA = Biome.builder()
             .category(Biome.Category.TAIGA)
             .name(NamespaceID.from("minecraft:giant_spruce_taiga"))
             .temperature(0.25F)
@@ -207,7 +204,7 @@ public class BiomeProperties {
             .effects(BiomeTint.TAIGA)
             .build();
 
-    private static final Biome PLAINS = Biome.builder()
+    public static final Biome PLAINS = Biome.builder()
             .category(Biome.Category.PLAINS)
             .name(NamespaceID.from("minecraft:plains"))
             .temperature(0.8F)
@@ -217,7 +214,7 @@ public class BiomeProperties {
             .effects(BiomeTint.PLAINS)
             .build();
 
-    private static final Biome SUNFLOWER_PLAINS = Biome.builder()
+    public static final Biome SUNFLOWER_PLAINS = Biome.builder()
             .category(Biome.Category.PLAINS)
             .name(NamespaceID.from("minecraft:sunflower_plains"))
             .temperature(0.8F)
@@ -227,7 +224,7 @@ public class BiomeProperties {
             .effects(BiomeTint.PLAINS)
             .build();
 
-    private static final Biome FOREST = Biome.builder()
+    public static final Biome FOREST = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:forest"))
             .temperature(0.7F)
@@ -237,7 +234,7 @@ public class BiomeProperties {
             .effects(BiomeTint.FOREST)
             .build();
 
-    private static final Biome FLOWER_FOREST = Biome.builder()
+    public static final Biome FLOWER_FOREST = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:flower_forest"))
             .temperature(0.7F)
@@ -247,7 +244,7 @@ public class BiomeProperties {
             .effects(BiomeTint.FOREST)
             .build();
 
-    private static final Biome BIRCH_FOREST = Biome.builder()
+    public static final Biome BIRCH_FOREST = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:birch_forest"))
             .temperature(0.6F)
@@ -257,7 +254,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BIRCH_FOREST)
             .build();
 
-    private static final Biome TALL_BIRCH_FOREST = Biome.builder()
+    public static final Biome TALL_BIRCH_FOREST = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:tall_birch_forest"))
             .temperature(0.7F)
@@ -267,7 +264,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BIRCH_FOREST)
             .build();
 
-    private static final Biome DARK_FOREST = Biome.builder()
+    public static final Biome DARK_FOREST = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:dark_forest"))
             .temperature(0.7F)
@@ -277,7 +274,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DARK_FOREST)
             .build();
 
-    private static final Biome DARK_FOREST_HILLS = Biome.builder()
+    public static final Biome DARK_FOREST_HILLS = Biome.builder()
             .category(Biome.Category.FOREST)
             .name(NamespaceID.from("minecraft:dark_forest_hills"))
             .temperature(0.7F)
@@ -287,7 +284,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DARK_FOREST)
             .build();
 
-    private static final Biome SWAMP = Biome.builder()
+    public static final Biome SWAMP = Biome.builder()
             .category(Biome.Category.SWAMP)
             .name(NamespaceID.from("minecraft:swamp"))
             .temperature(0.8F)
@@ -297,7 +294,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SWAMP)
             .build();
 
-    private static final Biome SWAMP_HILLS = Biome.builder()
+    public static final Biome SWAMP_HILLS = Biome.builder()
             .category(Biome.Category.SWAMP)
             .name(NamespaceID.from("minecraft:swamp_hills"))
             .temperature(0.8F)
@@ -307,7 +304,7 @@ public class BiomeProperties {
             .effects(BiomeTint.SWAMP)
             .build();
 
-    private static final Biome JUNGLE = Biome.builder()
+    public static final Biome JUNGLE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:jungle"))
             .temperature(0.95F)
@@ -317,7 +314,7 @@ public class BiomeProperties {
             .effects(BiomeTint.JUNGLE)
             .build();
 
-    private static final Biome MODIFIED_JUNGLE = Biome.builder()
+    public static final Biome MODIFIED_JUNGLE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:modified_jungle"))
             .temperature(0.95F)
@@ -327,7 +324,7 @@ public class BiomeProperties {
             .effects(BiomeTint.JUNGLE)
             .build();
 
-    private static final Biome JUNGLE_EDGE = Biome.builder()
+    public static final Biome JUNGLE_EDGE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:jungle_egde"))
             .temperature(0.95F)
@@ -337,7 +334,7 @@ public class BiomeProperties {
             .effects(BiomeTint.JUNGLE_EDGE)
             .build();
 
-    private static final Biome MODIFIED_JUNGLE_EDGE = Biome.builder()
+    public static final Biome MODIFIED_JUNGLE_EDGE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:modified_jungle_egde"))
             .temperature(0.95F)
@@ -347,7 +344,7 @@ public class BiomeProperties {
             .effects(BiomeTint.JUNGLE_EDGE)
             .build();
 
-    private static final Biome BAMBOO_JUNGLE = Biome.builder()
+    public static final Biome BAMBOO_JUNGLE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:bamboo_jungle"))
             .temperature(0.95F)
@@ -357,7 +354,7 @@ public class BiomeProperties {
             .effects(BiomeTint.JUNGLE)
             .build();
 
-    private static final Biome RIVER = Biome.builder()
+    public static final Biome RIVER = Biome.builder()
             .category(Biome.Category.RIVER)
             .name(NamespaceID.from("minecraft:river"))
             .temperature(0.5F)
@@ -367,7 +364,7 @@ public class BiomeProperties {
             .effects(BiomeTint.PLAINS)
             .build();
 
-    private static final Biome BEACH = Biome.builder()
+    public static final Biome BEACH = Biome.builder()
             .category(Biome.Category.BEACH)
             .name(NamespaceID.from("minecraft:beach"))
             .temperature(0.5F)
@@ -377,7 +374,7 @@ public class BiomeProperties {
             .effects(BiomeTint.PLAINS)
             .build();
 
-    private static final Biome MUSHROOM_FIELDS = Biome.builder()
+    public static final Biome MUSHROOM_FIELDS = Biome.builder()
             .category(Biome.Category.MUSHROOM)
             .name(NamespaceID.from("minecraft:mushroom_fields"))
             .temperature(0.9F)
@@ -387,7 +384,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MUSHROOM_FIELDS)
             .build();
 
-    private static final Biome MUSHROOM_FIELD_SHORE = Biome.builder()
+    public static final Biome MUSHROOM_FIELD_SHORE = Biome.builder()
             .category(Biome.Category.MUSHROOM)
             .name(NamespaceID.from("minecraft:mushroom_field_shore"))
             .temperature(0.9F)
@@ -397,7 +394,7 @@ public class BiomeProperties {
             .effects(BiomeTint.MUSHROOM_FIELDS)
             .build();
 
-    private static final Biome DESERT = Biome.builder()
+    public static final Biome DESERT = Biome.builder()
             .category(Biome.Category.DESERT)
             .name(NamespaceID.from("minecraft:desert"))
             .temperature(2.0F)
@@ -407,7 +404,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome DESERT_LAKES = Biome.builder()
+    public static final Biome DESERT_LAKES = Biome.builder()
             .category(Biome.Category.DESERT)
             .name(NamespaceID.from("minecraft:desert_lakes"))
             .temperature(2.0F)
@@ -417,7 +414,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome SAVANNA = Biome.builder()
+    public static final Biome SAVANNA = Biome.builder()
             .category(Biome.Category.SAVANNA)
             .name(NamespaceID.from("minecraft:savanna"))
             .temperature(1.2F)
@@ -427,7 +424,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome SHATTERED_SAVANNA = Biome.builder()
+    public static final Biome SHATTERED_SAVANNA = Biome.builder()
             .category(Biome.Category.SAVANNA)
             .name(NamespaceID.from("minecraft:shattered_savanna"))
             .temperature(1.1F)
@@ -437,7 +434,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome BADLANDS = Biome.builder()
+    public static final Biome BADLANDS = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:badlands"))
             .temperature(2.0F)
@@ -447,7 +444,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BADLANDS)
             .build();
 
-    private static final Biome ERODED_BADLANDS = Biome.builder()
+    public static final Biome ERODED_BADLANDS = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:eroded_badlands"))
             .temperature(2.0F)
@@ -457,7 +454,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BADLANDS)
             .build();
 
-    private static final Biome WOODED_BADLANDS_PLATEAU = Biome.builder()
+    public static final Biome WOODED_BADLANDS_PLATEAU = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:wooded_badlands_plateau"))
             .temperature(2.0F)
@@ -467,7 +464,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BADLANDS)
             .build();
 
-    private static final Biome MODIFIED_WOODED_BADLANDS_PLATEAU = Biome.builder()
+    public static final Biome MODIFIED_WOODED_BADLANDS_PLATEAU = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:modified_wooded_badlands_plateau"))
             .temperature(2.0F)
@@ -477,7 +474,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BADLANDS)
             .build();
 
-    private static final Biome SAVANNA_PLATEAU = Biome.builder()
+    public static final Biome SAVANNA_PLATEAU = Biome.builder()
             .category(Biome.Category.SAVANNA)
             .name(NamespaceID.from("minecraft:savanna_plateau"))
             .temperature(1.0F)
@@ -487,7 +484,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome BADLANDS_PLATEAU = Biome.builder()
+    public static final Biome BADLANDS_PLATEAU = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:badlands_plateau"))
             .temperature(2.0F)
@@ -497,7 +494,7 @@ public class BiomeProperties {
             .effects(BiomeTint.BADLANDS)
             .build();
 
-    private static final Biome SHATTERED_SAVANNA_PLATEAU = Biome.builder()
+    public static final Biome SHATTERED_SAVANNA_PLATEAU = Biome.builder()
             .category(Biome.Category.SAVANNA)
             .name(NamespaceID.from("minecraft:shattered_savanna_plateau"))
             .temperature(1.0F)
@@ -507,7 +504,7 @@ public class BiomeProperties {
             .effects(BiomeTint.DESERT)
             .build();
 
-    private static final Biome MODIFIED_BADLANDS_PLATEAU = Biome.builder()
+    public static final Biome MODIFIED_BADLANDS_PLATEAU = Biome.builder()
             .category(Biome.Category.MESA)
             .name(NamespaceID.from("minecraft:modified_badlands_plateau"))
             .temperature(2.0F)
