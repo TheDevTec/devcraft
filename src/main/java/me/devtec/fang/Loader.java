@@ -2,10 +2,7 @@ package me.devtec.fang;
 
 import com.google.common.base.Charsets;
 import me.devtec.fang.commands.PluginCommand;
-import me.devtec.fang.commands.defaults.DeopCommand;
-import me.devtec.fang.commands.defaults.GamemodeCommand;
-import me.devtec.fang.commands.defaults.OpCommand;
-import me.devtec.fang.commands.defaults.StopCommand;
+import me.devtec.fang.commands.defaults.*;
 import me.devtec.fang.configs.ServerProperties;
 import me.devtec.fang.data.Data;
 import me.devtec.fang.data.DataType;
@@ -31,7 +28,8 @@ import java.util.Random;
 import java.util.UUID;
 
 public class Loader {
-    public static Data opConfig = new Data("op.json");
+    public static Data opConfig = new Data("configs/op.json");
+    public static ServerProperties p = new ServerProperties();
 
     public static void log(String text) {
         System.out.println("[Fang] [" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + "] " + text);
@@ -40,7 +38,6 @@ public class Loader {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
 
-        ServerProperties p = new ServerProperties();
         p.Setup();
         //LOAD CONFIGS
 
@@ -143,6 +140,21 @@ public class Loader {
         command = new PluginCommand("gamemode");
         command.setPermission("minecraft.gamemode");
         command.setCommandExecutor(new GamemodeCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("seed");
+        command.setPermission("minecraft.seed");
+        command.setCommandExecutor(new SeedCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("list");
+        command.setPermission("minecraft.list");
+        command.setCommandExecutor(new ListCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("teleport");
+        command.setPermission("minecraft.teleport");
+        command.setCommandExecutor(new TeleportCommand());
         Fang.registerCommand(command);
 
         MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, cc) -> sender.sendMessage("Uknown command. Type '/help' for help."));

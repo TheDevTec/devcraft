@@ -136,4 +136,12 @@ public class Fang {
         for(String u : Loader.opConfig.getKeys())players.add(getOfflinePlayer(UUID.fromString(u)));
         return players;
     }
+
+    public static Player getPlayer(String name) {
+        return MinecraftServer.getConnectionManager().getPlayer(name);
+    }
+
+    public static Player getPlayer(UUID name) {
+        return MinecraftServer.getConnectionManager().getPlayer(name);
+    }
 }

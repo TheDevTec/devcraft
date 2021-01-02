@@ -18,7 +18,10 @@ public class GamemodeCommand extends CommandExecutor implements TabCompleter {
             sender.sendMessage("/Gamemode <gamemode> <player>");
             return;
         }
-        GameMode mode = GameMode.valueOf(args[0].toUpperCase());
+        GameMode mode = null;
+        try{
+            mode=GameMode.valueOf(args[0].toUpperCase());
+        }catch(Exception | NoSuchFieldError er){}
         if(mode==null){
             sender.sendMessage("/Gamemode <gamemode> <player>");
             return;
