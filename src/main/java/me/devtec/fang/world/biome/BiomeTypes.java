@@ -1,5 +1,6 @@
 package me.devtec.fang.world.biome;
 
+import me.devtec.fang.Loader;
 import me.devtec.fang.world.NoiseGen;
 import me.devtec.fang.world.generators.Normal;
 import net.minestom.server.instance.batch.ChunkBatch;
@@ -15,42 +16,158 @@ public class BiomeTypes {
     Temperature temperature = new Temperature();
     NoiseGen noiseGen = new NoiseGen();
 
-    private static final int rangeModifier = 0; //shifts balance to hotter side
-
-    private static final int heightModifier = Normal.getModifier();
+    private static final int rangeModifier = 0; //shifts balance to one side
 
     public void decideBiomeType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
+
         double temp = temperature.getTemp(X, Z);
+        if (Y > 70) {
+            temp -= 0.125*(Y - 63);
+        }
 
         if (Y >= 63) {
-            if (temp <= 33 + rangeModifier) {
-                SnowyType(batch, X, Y, Z, inChunkX, inChunkZ);
-            } else if (temp <= 0 + rangeModifier) {
-                ColdType(batch, X, Y, Z, inChunkX, inChunkZ);
-            } else if (temp <= 66 + rangeModifier) {
-                LushType(batch, X, Y, Z, inChunkX, inChunkZ);
-            } else /* if (temp > 50) */ {
-                WarmType(batch, X, Y, Z, inChunkX, inChunkZ);
+            if (temp <= 10 + rangeModifier) {
+                SnowyType(batch, X, Y, Z, inChunkX, inChunkZ, temp);
+            } else if (temp <= 30 + rangeModifier) {
+                ColdType(batch, X, Y, Z, inChunkX, inChunkZ, temp);
+            } else if (temp <= 75 + rangeModifier) {
+                LushType(batch, X, Y, Z, inChunkX, inChunkZ, temp);
+            } else /* if (temp > 75) */ {
+                WarmType(batch, X, Y, Z, inChunkX, inChunkZ, temp);
             }
         } else {
             //TODO: ocean biomes
         }
     }
 
-    private void SnowyType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        SnowyTundra(batch, X, Y, Z);
+    private void SnowyType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ, double temp){
+        //6 biomes
+        double range = temp;
+        double step = 10/7;
+
+        if (range <= step){
+            SnowyTaigaMountains(batch, X, Y, Z);
+        } else if (range <= step*2){
+            IceSpikes(batch, X, Y, Z);
+        } else if (range <= step*3){
+            SnowyTundra(batch, X, Y, Z);
+        } else if (range <= step*4){
+            SnowyTaiga(batch, X, Y, Z);
+        } else if (range <= step*5){
+            FrozenRiver(batch, X, Y, Z);
+        } else {
+            if (Y <= 68) {
+                SnowyBeach(batch, X, Y, Z);
+            } else {
+                SnowyTundra(batch, X, Y, Z);
+            }
+        }
     }
 
-    private void ColdType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        Mountains(batch, X, Y, Z);
+    private void ColdType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ, double temp){
+        //8 biomes
+        double range = temp - 10;
+        double step = 20/8;
+
+        if (range <= step){
+            Mountains(batch, X, Y, Z);
+        } else if (range <= step*2){
+            GravellyMountains(batch, X, Y, Z);
+        } else if (range <= step*3){
+            WoodedMountains(batch, X, Y, Z);
+        } else if (range <= step*4){
+            GravellyMountainsPlus(batch, X, Y, Z);
+        } else if (range <= step*5){
+            Taiga(batch, X, Y, Z);
+        } else if (range <= step*6){
+            TaigaMountains(batch, X, Y, Z);
+        } else if (range <= step*7){
+            GiantTreeTaiga(batch, X, Y, Z);
+        } else if (range <= step*8){
+            GiantSpruceTaiga(batch, X, Y, Z);
+        }
     }
 
-    private void LushType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        Plains(batch, X, Y, Z);
+    private void LushType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ, double temp){
+        //17-19 biomes
+        double range = temp - 40;
+        double step = 45/17;
+
+        if (range <= step){
+            Plains(batch, X, Y, Z);
+        } else if (range <= step*2){
+            SunflowerPlains(batch, X, Y, Z);
+        } else if (range <= step*3){
+            Forest(batch, X, Y, Z);
+        } else if (range <= step*4){
+            FlowerForest(batch, X, Y, Z);
+        } else if (range <= step*5){
+            BirchForest(batch, X, Y, Z);
+        } else if (range <= step*6){
+            TallBirchForest(batch, X, Y, Z);
+        } else if (range <= step*7){
+            DarkForest(batch, X, Y, Z);
+        } else if (range <= step*8){
+            DarkForestHills(batch, X, Y, Z);
+        } else if (range <= step*9){
+            if (Y > 68){
+                SwampHills(batch, X, Y, Z);
+            } else {
+                Swamp(batch, X, Y, Z);
+            }
+        } else if (range <= step*10){
+            Jungle(batch, X, Y, Z);
+        } else if (range <= step*11){
+            JungleEdge(batch, X, Y, Z);
+        } else if (range <= step*12){
+            ModifiedJungle(batch, X, Y, Z);
+        } else if (range <= step*13){
+            ModifiedJungleEdge(batch, X, Y, Z);
+        } else if (range <= step*14){
+            BambooJungle(batch, X, Y, Z);
+        } else if (range <= step*15){
+            River(batch, X, Y, Z);
+        } else if (range <= step*16){
+            Beach(batch, X, Y, Z);
+        }
     }
 
-    private void WarmType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ){
-        Desert(batch, X, Y, Z);
+    private void WarmType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ, double temp){
+        //12 biomes
+        double range = temp - 75;
+        double step = 25/10;
+
+        if (range <= step){
+            if (Y < 68){
+                DesertLakes(batch, X, Y, Z);
+            } else {
+                Desert(batch, X, Y, Z);
+            }
+        } else if (range <= step*2){
+            if (Y > 80){
+                ShatteredSavanna(batch, X, Y, Z);
+            } else {
+                Savanna(batch, X, Y, Z);
+            }
+        } else if (range <= step*3) {
+            SavannaPlateau(batch, X, Y, Z);
+        } else if (range <= step*4) {
+            ShatteredSavannaPlateau(batch, X, Y, Z);
+        } else if (range <= step*5) {
+            if (Y > 80){
+                ErodedBadlands(batch, X, Y, Z);
+            } else {
+                Badlands(batch, X, Y, Z);
+            }
+        } else if (range <= step*6) {
+            BadlandsPlateau(batch, X, Y, Z);
+        } else if (range <= step*7) {
+            WoodedBadlandsPlateau(batch, X, Y, Z);
+        } else if (range <= step*8){
+            ModifiedBadlandsPlateau(batch, X, Y, Z);
+        } else if (range <= step*9) {
+            ModifiedWoodedBadlandsPlateau(batch, X, Y, Z);
+        }
     }
 
     //SNOWY BIOMES
@@ -247,12 +364,12 @@ public class BiomeTypes {
         }
 
         //podzol patches
-        if (noiseGen.customPositiveNoise(X, Z, 0.01f) > 0.7){
+        if (noiseGen.customPositiveNoise(X, Z, 0.2f) > 0.75){
             batch.setBlock(X, Y - 1, Z, Block.PODZOL);
         }
 
         //coarse dirt patches
-        if (noiseGen.customPositiveNoise(X, Z, 0.01f, 2) > 0.7){
+        if (noiseGen.customPositiveNoise(X, Z, 0.15f, 2) > 0.8){
             batch.setBlock(X, Y - 1, Z, Block.COARSE_DIRT);
         }
 
@@ -266,12 +383,12 @@ public class BiomeTypes {
         }
 
         //podzol patches
-        if (noiseGen.customPositiveNoise(X, Z, 0.01f) > 0.7){
+        if (noiseGen.customPositiveNoise(X, Z, 0.2f) > 0.75){
             batch.setBlock(X, Y - 1, Z, Block.PODZOL);
         }
 
         //coarse dirt patches
-        if (noiseGen.customPositiveNoise(X, Z, 0.01f, 2) > 0.7){
+        if (noiseGen.customPositiveNoise(X, Z, 0.15f, 2) > 0.8){
             batch.setBlock(X, Y - 1, Z, Block.COARSE_DIRT);
         }
 
