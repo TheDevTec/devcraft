@@ -10,7 +10,6 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.storage.StorageLocation;
 import net.minestom.server.storage.StorageOptions;
 import net.minestom.server.utils.BlockPosition;
-import net.minestom.server.utils.chunk.ChunkCallback;
 import net.minestom.server.world.DimensionType;
 
 import java.io.File;
@@ -29,12 +28,8 @@ public class World {
         if(world.isChunkLoaded(x>>4, z>>4))
         world.setBlock(x, y, z, block);
         else{
-            world.loadChunk(x >> 4, z >> 4, new ChunkCallback() { //wait to load chunk
-                @Override
-                public void accept(Chunk chunk) {
-                    world.setBlock(x, y, z, block);
-                }
-            });
+            //wait to load chunk
+            world.loadChunk(x >> 4, z >> 4, chunk -> world.setBlock(x, y, z, block));
         }
     }
 

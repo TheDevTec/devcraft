@@ -19,7 +19,6 @@ public class OpConfig {
         }
     }
 
-    /*
     public boolean isOp(String name){
         boolean returnVal = false;
         if (data.exists(name)){
@@ -27,7 +26,6 @@ public class OpConfig {
         }
         return returnVal;
     }
-    */
 
     public int getOpLevel(String name){
         return data.getInt(name);

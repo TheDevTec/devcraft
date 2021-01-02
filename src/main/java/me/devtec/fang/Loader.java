@@ -1,15 +1,16 @@
 package me.devtec.fang;
 
-import me.devtec.fang.commands.DeopCommand;
-import me.devtec.fang.commands.GamemodeCommand;
-import me.devtec.fang.commands.OpCommand;
-import me.devtec.fang.commands.StopCommand;
+import com.google.common.base.Charsets;
+import me.devtec.fang.commands.PluginCommand;
+import me.devtec.fang.commands.defaults.DeopCommand;
+import me.devtec.fang.commands.defaults.GamemodeCommand;
+import me.devtec.fang.commands.defaults.OpCommand;
+import me.devtec.fang.commands.defaults.StopCommand;
 import me.devtec.fang.configs.ServerProperties;
+import me.devtec.fang.data.Data;
+import me.devtec.fang.data.DataType;
 import me.devtec.fang.data.Ref;
-import me.devtec.fang.world.Fang;
-import me.devtec.fang.world.biome.BiomeProperties;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.command.CommandSender;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerChatEvent;
@@ -24,14 +25,13 @@ import net.minestom.server.utils.Position;
 import net.minestom.server.world.Difficulty;
 import net.minestom.server.world.DimensionType;
 
-import java.awt.*;
-import java.awt.print.Book;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
+import java.util.UUID;
 
 public class Loader {
+    public static Data opConfig = new Data("op.json");
 
     public static void log(String text) {
         System.out.println("[Fang] [" + new SimpleDateFormat("HH:mm:ss").format(new Date()) + "] " + text);
@@ -59,7 +59,6 @@ public class Loader {
         MinecraftServer.setMaxPacketSize(p.get().getInt("server.packet-maxSize"));
         MinecraftServer.setDifficulty(Difficulty.valueOf(p.get().getString("server.difficulty").toUpperCase()));
         Fang.createWorld(p.get().getString("server.level"), DimensionType.OVERWORLD, new Random().nextLong());
-        BiomeProperties.registerAllBiomes();
         /*
         Fang.createWorld(p.get().getString("server.level") + "_nether", DimensionType.builder(NamespaceID.from("minecraft:nether"))
                 .ultrawarm(false)
@@ -95,15 +94,19 @@ public class Loader {
             final Player player = event.getPlayer();
             log(player.getUsername() + " joined the game.");
             event.setSpawningInstance((Instance) Ref.get(Fang.getWorld("world"), "world"));
+            setOfflineUUID(player.getUsername(), player.getUuid());
             player.setRespawnPoint(new Position(0, 100, 0));
         });
         events.addEventCallback(PlayerDisconnectEvent.class, event -> {
             log(event.getPlayer().getUsername() + " disconnected from the game.");
         });
 
+
         events.addEventCallback(PlayerChatEvent.class, event -> {
             log(event.getPlayer().getUsername() + ": " + event.getMessage());
         });
+
+
 
         OptifineSupport.enable();
         switch (p.get().getString("server.type").toUpperCase()) {
@@ -122,9 +125,47 @@ public class Loader {
         log("Server loaded in " + (System.currentTimeMillis() - start) + "ms");
 
         //LOAD COMMANDS
-        MinecraftServer.getCommandManager().register(new StopCommand());
-        MinecraftServer.getCommandManager().register(new OpCommand());
-        MinecraftServer.getCommandManager().register(new DeopCommand());
-        MinecraftServer.getCommandManager().register(new GamemodeCommand());
+        PluginCommand command = new PluginCommand("stop");
+        command.setPermission("minecraft.stop");
+        command.setCommandExecutor(new StopCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("op");
+        command.setPermission("minecraft.op");
+        command.setCommandExecutor(new OpCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("deop");
+        command.setPermission("minecraft.deop");
+        command.setCommandExecutor(new DeopCommand());
+        Fang.registerCommand(command);
+
+        command = new PluginCommand("gamemode");
+        command.setPermission("minecraft.gamemode");
+        command.setCommandExecutor(new GamemodeCommand());
+        Fang.registerCommand(command);
+
+        MinecraftServer.getCommandManager().setUnknownCommandCallback((sender, cc) -> sender.sendMessage("Uknown command. Type '/help' for help."));
+    }
+
+    public static Data base = new Data("UserCache.dat");
+
+    public static UUID getOfflineUUID(String name) {
+        if(!base.exists("name."+name.toLowerCase()))
+            setOfflineUUID(name, UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8)));
+        return UUID.fromString(base.getString("name."+name.toLowerCase()));
+    }
+
+    public static String getOfflineName(UUID uuid) {
+        return base.getString("uuid."+uuid.toString());
+    }
+
+    public static void setOfflineUUID(String name, UUID uuid) {
+        base.set("name."+name.toLowerCase(), uuid.toString());
+        base.set("uuid."+uuid.toString(), name.toLowerCase());
+    }
+
+    public static void savePlayers() {
+        base.save(DataType.BYTE);
     }
 }
