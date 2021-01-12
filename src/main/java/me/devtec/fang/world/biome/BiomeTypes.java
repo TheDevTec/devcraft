@@ -265,7 +265,7 @@ public class BiomeTypes {
 
         //gravel cover
         if (noiseGen.customPositiveNoise(X, Z, 0.03f, 2) > 0.5){
-            batch.setBlock(X, Y, Z, Block.GRAVEL);
+            batch.setBlock(X, Y-1, Z, Block.GRAVEL);
             for (int i = rand.nextInt(3)+1; i > 0; i--){
                 batch.setBlock(X, Y-i, Z, Block.GRAVEL);
             }
@@ -326,7 +326,7 @@ public class BiomeTypes {
 
         //snowy mountaintops
         if (Y > 100) {
-            batch.setBlock(X, Y, Z, Block.SNOW_BLOCK);
+            batch.setBlock(X,Y-1, Z, Block.SNOW_BLOCK);
             if (rand.nextBoolean()) {
                 short id = Block.SNOW.getBlockId();
                 int idx = rand.nextInt(7);

@@ -41,8 +41,7 @@ public class Normal implements ChunkGenerator {
                 int posX = (chunkX * 16) + x;
                 int posZ = (chunkZ * 16) + z;
 
-                //double Y = getNoise.getY(posX, posZ) + modifier; //+modifier accounts for raising oceans to y=63
-                double Y = getNoise.getY(posX, posZ) + modifier;
+                double Y = getNoise.getY(posX, posZ) + modifier; //+modifier accounts for raising oceans to y=63
 
                 for (int i = 0; i < Y; i++) {
 

@@ -1,6 +1,7 @@
 package me.devtec.fang.world.biome;
 
 import me.devtec.fang.world.NoiseGen;
+import me.devtec.fang.world.generators.Normal;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.world.biomes.Biome;
 import org.jetbrains.annotations.NotNull;
@@ -14,7 +15,7 @@ public class SetBiome {
     public static Biome getBiomeType(int chunkX, int chunkZ){
         int posX = chunkX*16 + 8;
         int posZ = chunkZ*16 + 8;
-        int posY = noiseGen.getY(posX, posZ);
+        int posY = noiseGen.getY(posX, posZ) + Normal.getModifier();
 
         return decideBiomeType(posX, posY, posZ);
     }

@@ -38,7 +38,7 @@ dependencies {
 
     // Compile Minestom into project
     //implementation("com.github.Minestom", "Minestom", "7bcca8ff9f")
-    implementation("com.github.Minestom", "Minestom", "2ec727d5f8")
+    implementation("com.github.Minestom", "Minestom", "fcc5bc4381")
 
     // OkHttp
     implementation("com.squareup.okhttp3", "okhttp", "4.9.0")
