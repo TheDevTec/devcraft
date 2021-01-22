@@ -1,0 +1,103 @@
+package net.minestom.server.extras.velocity;
+
+import java.net.InetAddress;
+import java.security.InvalidKeyException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import com.google.common.net.InetAddresses;
+
+import io.netty.buffer.ByteBuf;
+import net.minestom.server.entity.PlayerSkin;
+import net.minestom.server.utils.binary.BinaryReader;
+
+/**
+ * Support for <a href="https://velocitypowered.com/">Velocity</a> modern forwarding.
+ * <p>
+ * Can be enabled by simply calling {@link #enable(String)}.
+ */
+public final class VelocityProxy {
+
+    public static final String PLAYER_INFO_CHANNEL = "velocity:player_info";
+    private static final int SUPPORTED_FORWARDING_VERSION = 1;
+
+    private static volatile boolean enabled;
+    private static byte[] secret;
+
+    /**
+     * Enables velocity modern forwarding.
+     *
+     * @param secret the forwarding secret,
+     *               be sure to do not hardcode it in your code but to retrieve it from a file or anywhere else safe
+     */
+    public static void enable(String secret) {
+        VelocityProxy.enabled = true;
+        VelocityProxy.secret = secret.getBytes();
+    }
+
+    /**
+     * Gets if velocity modern forwarding is enabled.
+     *
+     * @return true if velocity modern forwarding is enabled
+     */
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static boolean checkIntegrity(BinaryReader reader) {
+        if (!enabled) {
+            return false;
+        }
+
+        final byte[] signature = reader.readBytes(32);
+
+        ByteBuf buf = reader.getBuffer();
+        final byte[] data = new byte[buf.readableBytes()];
+        buf.getBytes(buf.readerIndex(), data);
+
+        try {
+            final Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(new SecretKeySpec(secret, "HmacSHA256"));
+            final byte[] mySignature = mac.doFinal(data);
+            if (!MessageDigest.isEqual(signature, mySignature)) {
+                return false;
+            }
+        } catch (final InvalidKeyException | NoSuchAlgorithmException e) {
+            throw new AssertionError(e);
+        }
+
+        final int version = reader.readVarInt();
+        return version == SUPPORTED_FORWARDING_VERSION;
+    }
+
+    public static InetAddress readAddress(BinaryReader reader) {
+        return InetAddresses.forString(reader.readSizedString(Integer.MAX_VALUE));
+    }
+
+    public static PlayerSkin readSkin(BinaryReader reader) {
+        String skinTexture = null;
+        String skinSignature = null;
+
+        final int properties = reader.readVarInt();
+        for (int i1 = 0; i1 < properties; i1++) {
+            final String name = reader.readSizedString(Short.MAX_VALUE);
+            final String value = reader.readSizedString(Short.MAX_VALUE);
+            final String signature = reader.readBoolean() ? reader.readSizedString(Short.MAX_VALUE) : null;
+
+            if (name.equals("textures")) {
+                skinTexture = value;
+                skinSignature = signature;
+            }
+        }
+
+        if (skinTexture != null && skinSignature != null) {
+            return new PlayerSkin(skinTexture, skinSignature);
+        } else {
+            return null;
+        }
+    }
+
+}

@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="lib" path="build/libs/Fang.jar"/>
-	<classpathentry kind="lib" path="gradle/wrapper/gradle-wrapper.jar"/>
-	<classpathentry kind="output" path="build/classes/java/main"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/guava-23.0.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/netty-all-4.1.56.Final.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/org.objectweb.asm.tree.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/org.objectweb.asm.util.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/org.objectweb.asm.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/commons-lang3-3.11.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/javapoet-1.13.0.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/authlib-1.5.17.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/lwjgl-opengl.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/lwjgl.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/Hephaistos-1.1.5.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/kotlin-runtime-1.2.71.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/pathfinding-1.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/data-structures-2.10.jar"/>
+	<classpathentry kind="lib" path="C:/EclipseUtils/Server/lwjgl-glfw.jar"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>
