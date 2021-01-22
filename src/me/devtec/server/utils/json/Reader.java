@@ -2,8 +2,12 @@ package me.devtec.server.utils.json;
 
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,8 +22,6 @@ import com.google.gson.GsonBuilder;
 
 import me.devtec.server.utils.Ref;
 import me.devtec.server.utils.StringUtils;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Reader implements JsonReader {
 	//Do you want your own JsonParser? Override this one! Ref.set(Reader.class, "reader", <NewReaderJson>)
@@ -53,7 +55,7 @@ public class Reader implements JsonReader {
 		if (json == null)
 			return null;
 		try {
-			return (Collection<?>) parser.fromJson(json, ArrayList.class);
+			return (Collection<?>) parser.fromJson(json, LinkedList.class);
 		} catch (Exception e1) {
 		}
 		return null;
@@ -63,7 +65,7 @@ public class Reader implements JsonReader {
 		if (json == null)
 			return null;
 		try {
-			return (List<?>) parser.fromJson(json, ArrayList.class);
+			return (List<?>) parser.fromJson(json, LinkedList.class);
 		} catch (Exception e1) {
 		}
 		return null;
@@ -79,7 +81,7 @@ public class Reader implements JsonReader {
 		if (json == null)
 			return null;
 		try {
-			return (Map<?, ?>) parser.fromJson(json, HashMap.class);
+			return (Map<?, ?>) parser.fromJson(json, LinkedHashMap.class);
 		} catch (Exception e1) {
 		}
 		return null;

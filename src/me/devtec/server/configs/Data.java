@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,29 +27,40 @@ import me.devtec.server.utils.json.Maker;
 import me.devtec.server.utils.json.Writer;
 
 public class Data {
-	private DataLoader loader = new EmptyLoader();
-	private Set<String> aw = new HashSet<>();
+	
+	private DataLoader loader;
+	private Set<String> aw;
 	private File a;
-
+	
 	public Data() {
+		loader = new EmptyLoader();
+		aw = new LinkedHashSet<>();
 	}
-
+	
 	public Data(String filePath) {
 		this(new File(filePath.startsWith("/") ? filePath.substring(1) : filePath), true);
 	}
-
+	
 	public Data(String filePath, boolean load) {
 		this(new File(filePath.startsWith("/") ? filePath.substring(1) : filePath), load);
 	}
-
+	
 	public Data(File f) {
 		this(f, true);
 	}
-
+	
 	public Data(File f, boolean load) {
 		a = f;
+		aw = new LinkedHashSet<>();
 		if (load)
 			reload(a);
+	}
+	
+	// CLONE
+	public Data(Data data) {
+		a = data.a;
+		aw = data.aw;
+		loader=data.loader;
 	}
 
 	public boolean exists(String path) {
@@ -317,19 +328,22 @@ public class Data {
 		return get(key) != null && get(key) instanceof Collection ? (Collection) get(key) : new ArrayList<>();
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E> List<E> getListAs(String key, Class<? extends E> clazz) {
 		// Cast everything to <E>
-		Collection<Object> items = getList(key);
-		List<E> list = new ArrayList<>();
-		for (Object o : items)
-			try {
-				if (o != null)
+		try {
+			//try to cast List<?> to List<E>
+			return (List<E>)getList(key);
+		}catch(Exception err) {
+			List<E> list = new ArrayList<>();
+			for (Object o : getList(key))
+				try {
 					list.add(o == null ? null : clazz.cast(o));
-				else
-					list.add(null);
-			} catch (Exception er) {
-			}
-		return list;
+				} catch (Exception er) {
+					er.printStackTrace();
+				}
+			return list;
+		}
 	}
 
 	public List<String> getStringList(String key) {
@@ -456,7 +470,6 @@ public class Data {
 				}
 				w.close();
 			} catch (Exception er) {
-				
 			}
 		}
 		return this;
@@ -486,13 +499,13 @@ public class Data {
 	}
 
 	public Set<String> getKeys() {
-		return new HashSet<>(aw);
+		return new LinkedHashSet<>(aw);
 	}
 
 	public Set<String> getKeys(boolean subkeys) {
 		if (subkeys)
 			return loader.getKeys();
-		return new HashSet<>(aw);
+		return new LinkedHashSet<>(aw);
 	}
 
 	public Set<String> getKeys(String key) {
@@ -515,7 +528,7 @@ public class Data {
 	}
 
 	public Set<String> getKeys(String key, boolean subkeys) {
-		Set<String> a = new HashSet<>();
+		Set<String> a = new LinkedHashSet<>();
 		for (String d : loader.getKeys())
 			if (d.startsWith(key)) {
 				String c = d.replaceFirst(Pattern.quote(key), "");
@@ -577,7 +590,6 @@ public class Data {
 				for (String key : getKeys(path, false))
 					preparePath(path + "." + key, key + ":", spaces + 1, b);
 			} catch (Exception er) {
-				
 			}
 		}
 	}
@@ -623,10 +635,10 @@ public class Data {
 	}
 
 	private static String cs(int s, int doubleSpace) {
-		StringWriter i = new StringWriter();
+		StringBuilder i = new StringBuilder();
 		String space = doubleSpace == 1 ? "  " : " ";
 		for (int c = 0; c < s; ++c)
-			i.write(space);
+			i.append(space);
 		return i.toString();
 	}
 

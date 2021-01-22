@@ -4,23 +4,13 @@ import java.io.File;
 import java.io.IOException;
 
 import net.minestom.server.BasicEnumGenerator;
-import net.minestom.server.registry.ResourceGatherer;
 
 public class ParticleEnumGenerator extends BasicEnumGenerator {
 
     public static void main(String[] args) throws IOException {
-        String targetVersion;
         if(args.length < 1) {
             System.err.println("Usage: <MC version> [target folder]");
             return;
-        }
-
-        targetVersion = args[0];
-
-        try {
-            ResourceGatherer.ensureResourcesArePresent(targetVersion); // TODO
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         String targetPart = DEFAULT_TARGET_PATH;

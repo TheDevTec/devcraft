@@ -1,14 +1,16 @@
 package net.minestom.server.gamedata.loottables;
 
+import java.io.FileNotFoundException;
+import java.io.Reader;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
+
 import net.minestom.server.gamedata.Condition;
-import net.minestom.server.registry.ResourceGatherer;
+import net.minestom.server.registry.ResourceGatherers;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.utils.NamespaceIDHashMap;
-
-import java.io.*;
 
 /**
  * Handles loading and configuration of loot tables
@@ -70,7 +72,7 @@ public final class LootTableManager {
     }
 
     public LootTable load(NamespaceID name) throws FileNotFoundException {
-        return load(name, new FileReader(new File(ResourceGatherer.DATA_FOLDER, "data/" + name.getDomain() + "/loot_tables/" + name.getPath() + ".json")));
+        return load(name, ResourceGatherers.read(name, "loot_tables"));
     }
 
     /**

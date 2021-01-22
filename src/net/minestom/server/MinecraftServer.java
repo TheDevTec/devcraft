@@ -1,12 +1,18 @@
 package net.minestom.server;
 
 import java.io.File;
-import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 
+import me.devtec.server.configs.Data;
 import net.minestom.server.advancements.AdvancementManager;
 import net.minestom.server.benchmark.BenchmarkManager;
 import net.minestom.server.command.CommandManager;
+import net.minestom.server.command.CommandSender;
 import net.minestom.server.data.DataManager;
 import net.minestom.server.data.DataType;
 import net.minestom.server.data.SerializableData;
@@ -28,9 +34,10 @@ import net.minestom.server.network.packet.server.play.PluginMessagePacket;
 import net.minestom.server.network.packet.server.play.ServerDifficultyPacket;
 import net.minestom.server.network.packet.server.play.UpdateViewDistancePacket;
 import net.minestom.server.ping.ResponseDataConsumer;
+import net.minestom.server.plugins.Plugin;
 import net.minestom.server.plugins.PluginManager;
 import net.minestom.server.recipe.RecipeManager;
-import net.minestom.server.registry.ResourceGatherer;
+import net.minestom.server.registry.ResourceGatherers;
 import net.minestom.server.scoreboard.TeamManager;
 import net.minestom.server.storage.StorageLocation;
 import net.minestom.server.storage.StorageManager;
@@ -38,6 +45,7 @@ import net.minestom.server.timer.Scheduler;
 import net.minestom.server.utils.MathUtils;
 import net.minestom.server.utils.PacketUtils;
 import net.minestom.server.utils.cache.TemporaryCache;
+import net.minestom.server.utils.callback.CommandCallback;
 import net.minestom.server.utils.thread.MinestomThread;
 import net.minestom.server.utils.validate.Check;
 import net.minestom.server.world.Difficulty;
@@ -74,6 +82,7 @@ public final class MinecraftServer {
     public static final int TICK_PER_SECOND = 20;
     private static final int MS_TO_SEC = 1000;
     public static final int TICK_MS = MS_TO_SEC / TICK_PER_SECOND;
+    private static int max;
 
     // Network monitoring
     private static int rateLimit = 300;
@@ -105,13 +114,8 @@ public final class MinecraftServer {
     private static final GlobalEventHandler GLOBAL_EVENT_HANDLER = new GlobalEventHandler();
 
     private static UpdateManager updateManager;
-    private static MinecraftServer minecraftServer;
 
     // Data
-    private static boolean initialized;
-    private static boolean started;
-    private static boolean stopping;
-
     private static int chunkViewDistance = 8;
     private static int entityViewDistance = 5;
     private static int compressionThreshold = 256;
@@ -122,48 +126,44 @@ public final class MinecraftServer {
     private static Difficulty difficulty = Difficulty.NORMAL;
     private static LootTableManager lootTableManager;
     private static TagManager tagManager;
+    
+    protected static Logger logger;
+	protected static Data data = new Data("Configs/Fang.yml");
+	static {
+        //LOAD DATA
 
-    public static MinecraftServer init() {
-        if (minecraftServer != null) // don't init twice
-            return minecraftServer;
-        pluginManager = new PluginManager();
+		if(!data.exists("complex-logger"))
+		data.set("complex-logger", true);
 
-        connectionManager = new ConnectionManager();
-        // Networking
-        packetProcessor = new PacketProcessor();
-        packetListenerManager = new PacketListenerManager();
+		if(!data.exists("server-ip"))
+		data.set("server-ip", "localhost");
 
-        instanceManager = new InstanceManager();
-        blockManager = new BlockManager();
-        entityManager = new EntityManager();
-        commandManager = new CommandManager();
-        recipeManager = new RecipeManager();
-        storageManager = new StorageManager();
-        teamManager = new TeamManager();
-        benchmarkManager = new BenchmarkManager();
-        dimensionTypeManager = new DimensionTypeManager();
-        biomeManager = new BiomeManager();
-        advancementManager = new AdvancementManager();
+		if(!data.exists("server-port"))
+		data.set("server-port", 25565);
 
-        updateManager = new UpdateManager();
+		if(!data.exists("max-players"))
+		data.set("max-players", 20);
+		
+		data.save(me.devtec.server.configs.DataType.YAML);
+		ConsoleLoggerFormatter.l=data.getBoolean("complex-logger");
+		  getDefaultConsoleHandler().ifPresent(
+		            consoleHandler -> consoleHandler.setFormatter(new ConsoleLoggerFormatter()));
+		logger = Logger.getLogger("Main");
+	}
 
-        lootTableManager = new LootTableManager();
-        tagManager = new TagManager();
+	static Optional<Handler> getDefaultConsoleHandler() {
+	    // All the loggers inherit configuration from the root logger. See:
+	    // https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html#a1.3
+	    Logger rootLogger = Logger.getLogger("");
+	    // The root logger's first handler is the default ConsoleHandler
+	    return first(Arrays.asList(rootLogger.getHandlers()));
+	}
 
-        nettyServer = new NettyServer(packetProcessor);
-
-        // Registry
-        try {
-            ResourceGatherer.ensureResourcesArePresent(VERSION_NAME);
-        } catch (IOException e) {
-        
-        }
-        initialized = true;
-
-        minecraftServer = new MinecraftServer();
-
-        return minecraftServer;
-    }
+	static <T> Optional<T> first(List<T> list) {
+	    return list.isEmpty() ?
+	            Optional.empty() :
+	            Optional.ofNullable(list.get(0));
+	}
 
     /**
      * Gets the current server brand name.
@@ -379,24 +379,6 @@ public final class MinecraftServer {
     }
 
     /**
-     * Gets if the server is up and running.
-     *
-     * @return true if the server is started
-     */
-    public static boolean isStarted() {
-        return started;
-    }
-
-    /**
-     * Gets if the server is currently being shutdown using {@link #stopCleanly()}.
-     *
-     * @return true if the server is being stopped
-     */
-    public static boolean isStopping() {
-        return stopping;
-    }
-
-    /**
      * Gets the chunk view distance of the server.
      *
      * @return the chunk view distance
@@ -415,22 +397,19 @@ public final class MinecraftServer {
         Check.argCondition(!MathUtils.isBetween(chunkViewDistance, 2, 32),
                 "The chunk view distance must be between 2 and 32");
         MinecraftServer.chunkViewDistance = chunkViewDistance;
-        if (started) {
+        final Collection<Player> players = connectionManager.getOnlinePlayers();
 
-            final Collection<Player> players = connectionManager.getOnlinePlayers();
+        players.forEach(player -> {
+            final Chunk playerChunk = player.getChunk();
+            if (playerChunk != null) {
 
-            players.forEach(player -> {
-                final Chunk playerChunk = player.getChunk();
-                if (playerChunk != null) {
+                UpdateViewDistancePacket updateViewDistancePacket = new UpdateViewDistancePacket();
+                updateViewDistancePacket.viewDistance = player.getChunkRange();
+                player.getPlayerConnection().sendPacket(updateViewDistancePacket);
 
-                    UpdateViewDistancePacket updateViewDistancePacket = new UpdateViewDistancePacket();
-                    updateViewDistancePacket.viewDistance = player.getChunkRange();
-                    player.getPlayerConnection().sendPacket(updateViewDistancePacket);
-
-                    player.refreshVisibleChunks(playerChunk);
-                }
-            });
-        }
+                player.refreshVisibleChunks(playerChunk);
+            }
+        });
     }
 
     /**
@@ -452,14 +431,12 @@ public final class MinecraftServer {
         Check.argCondition(!MathUtils.isBetween(entityViewDistance, 0, 32),
                 "The entity view distance must be between 0 and 32");
         MinecraftServer.entityViewDistance = entityViewDistance;
-        if (started) {
-            connectionManager.getOnlinePlayers().forEach(player -> {
-                final Chunk playerChunk = player.getChunk();
-                if (playerChunk != null) {
-                    player.refreshVisibleEntities(playerChunk);
-                }
-            });
-        }
+        connectionManager.getOnlinePlayers().forEach(player -> {
+            final Chunk playerChunk = player.getChunk();
+            if (playerChunk != null) {
+                player.refreshVisibleEntities(playerChunk);
+            }
+        });
     }
 
     /**
@@ -480,7 +457,6 @@ public final class MinecraftServer {
      * @throws IllegalStateException if this is called after the server started
      */
     public static void setCompressionThreshold(int compressionThreshold) {
-        Check.stateCondition(started, "The compression threshold cannot be changed after the server has been started.");
         MinecraftServer.compressionThreshold = compressionThreshold;
     }
 
@@ -508,7 +484,6 @@ public final class MinecraftServer {
      * @see #hasPacketCaching()
      */
     public static void setPacketCaching(boolean packetCaching) {
-        Check.stateCondition(started, "You cannot change the packet caching value after the server has been started.");
         MinecraftServer.packetCaching = packetCaching;
     }
 
@@ -536,7 +511,6 @@ public final class MinecraftServer {
      * @see #hasGroupedPacket()
      */
     public static void setGroupedPacket(boolean groupedPacket) {
-        Check.stateCondition(started, "You cannot change the grouped packet value after the server has been started.");
         MinecraftServer.groupedPacket = groupedPacket;
     }
 
@@ -586,7 +560,7 @@ public final class MinecraftServer {
     }
 
     /**
-     * Get the manager handling {@link Extension}.
+     * Get the manager handling {@link Plugin}.
      *
      * @return the extension manager
      */
@@ -630,7 +604,6 @@ public final class MinecraftServer {
      * @throws IllegalStateException if the server is already started
      */
     public static void setNettyThreadCount(int nettyThreadCount) {
-        Check.stateCondition(started, "Netty thread count can only be changed before the server starts!");
         MinecraftServer.nettyThreadCount = nettyThreadCount;
     }
 
@@ -653,6 +626,54 @@ public final class MinecraftServer {
         MinecraftServer.processNettyErrors = processNettyErrors;
     }
 
+    private static boolean init;
+    
+    public MinecraftServer(File file) {
+    	if(init)return;
+    	init=true;
+		Thread.currentThread().setName("Main");
+		logger.info("Server loading..");
+    	time=-System.currentTimeMillis();
+        pluginManager = new PluginManager();
+
+        connectionManager = new ConnectionManager();
+        // Networking
+        packetProcessor = new PacketProcessor();
+        packetListenerManager = new PacketListenerManager();
+
+        instanceManager = new InstanceManager();
+        blockManager = new BlockManager();
+        entityManager = new EntityManager();
+        commandManager = new CommandManager();
+        recipeManager = new RecipeManager();
+        storageManager = new StorageManager();
+        teamManager = new TeamManager();
+        benchmarkManager = new BenchmarkManager();
+        dimensionTypeManager = new DimensionTypeManager();
+        biomeManager = new BiomeManager();
+        advancementManager = new AdvancementManager();
+
+        updateManager = new UpdateManager();
+        
+		new ResourceGatherers(file);
+
+        lootTableManager = new LootTableManager();
+        tagManager = new TagManager();
+
+        nettyServer = new NettyServer(packetProcessor);
+        
+		//start
+		getCommandManager().setUnknownCommandCallback(new CommandCallback() {
+			public void apply(CommandSender sender, String command) {
+				sender.sendMessage("No such command");
+			}
+		});
+		max=data.getInt("max-players");
+		start(data.getString("server-ip"), data.getInt("server-port"), null);
+    }
+    
+    private long time;
+
     /**
      * Starts the server.
      * <p>
@@ -663,13 +684,17 @@ public final class MinecraftServer {
      * @param responseDataConsumer the response data consumer, can be null
      * @throws IllegalStateException if called before {@link #init()} or if the server is already running
      */
-    public void start(String address, int port, ResponseDataConsumer responseDataConsumer) {
-        Check.stateCondition(!initialized, "#start can only be called after #init");
-        Check.stateCondition(started, "The server is already started");
-
-        MinecraftServer.started = true;
+    void start(String address, int port, ResponseDataConsumer responseDataConsumer) {
         MinecraftServer.responseDataConsumer = responseDataConsumer;
 
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				stopCleanly();
+				logger.info("Server is closing..");
+			}
+		}));
 
         // Init & start the TCP server
         updateManager.start();
@@ -680,24 +705,15 @@ public final class MinecraftServer {
         File file = new File("plugins");
         if(!file.exists())file.mkdirs();
         pluginManager.loadPlugins(file);
-    }
-
-    /**
-     * Starts the server.
-     *
-     * @param address the server address
-     * @param port    the server port
-     * @see #start(String, int, ResponseDataConsumer)
-     */
-    public void start(String address, int port) {
-        start(address, port, null);
+        time+=System.currentTimeMillis();
+		logger.info("Server loaded in "+time+"ms");
     }
 
     /**
      * Stops this server properly (saves if needed, kicking players, etc.)
      */
     public static void stopCleanly() {
-        stopping = true;
+    	stop=true;
         updateManager.stop();
         Scheduler.shutdown();
         connectionManager.shutdown();
@@ -709,5 +725,28 @@ public final class MinecraftServer {
         TemporaryCache.REMOVER_SERVICE.shutdown();
         MinestomThread.shutdownAll();
     }
+    
+    public static void reload() {
+    	stop=true;
+        Scheduler.shutdown();
+        pluginManager.unloadPlugins();
+        File file = new File("plugins");
+        if(!file.exists())file.mkdirs();
+        pluginManager.loadPlugins(file);
+    	stop=false;
+    }
 
+	public static Logger getLogger() {
+		return logger;
+	}
+
+	public static int getMaxPlayers() {
+		return max;
+	}
+	
+	private static boolean stop;
+
+	public static boolean isStopping() {
+		return stop;
+	}
 }

@@ -1,10 +1,11 @@
 package net.minestom.server.ping;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 /**
  * Represents the data sent to the player when refreshing the server list.

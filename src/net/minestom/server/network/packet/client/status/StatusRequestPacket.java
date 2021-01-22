@@ -1,6 +1,7 @@
 package net.minestom.server.network.packet.client.status;
 
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Player;
 import net.minestom.server.network.packet.client.ClientPreplayPacket;
 import net.minestom.server.network.packet.server.handshake.ResponsePacket;
 import net.minestom.server.network.player.PlayerConnection;
@@ -18,11 +19,13 @@ public class StatusRequestPacket implements ClientPreplayPacket {
         // Fill default params
         responseData.setName(MinecraftServer.VERSION_NAME);
         responseData.setProtocol(MinecraftServer.PROTOCOL_VERSION);
-        responseData.setMaxPlayer(0);
-        responseData.setOnline(0);
-        responseData.setDescription("Minestom Server");
+        responseData.setOnline(MinecraftServer.getConnectionManager().getOnlinePlayers().size());
+        responseData.setMaxPlayer(MinecraftServer.getMaxPlayers());
         responseData.setFavicon("");
-
+        responseData.setDescription("");
+        for(Player p : MinecraftServer.getConnectionManager().getOnlinePlayers())
+        responseData.addPlayer(p.getUsername(), p.getUuid());
+        
         if (consumer != null)
             consumer.accept(connection, responseData);
 

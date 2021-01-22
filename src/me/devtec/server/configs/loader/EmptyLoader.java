@@ -1,16 +1,15 @@
 package me.devtec.server.configs.loader;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 public class EmptyLoader extends DataLoader {
-	private HashMap<String, Object[]> data = new HashMap<>();
-	private List<String> header = new ArrayList<>(), footer = new ArrayList<>();
+	private Map<String, Object[]> data = new LinkedHashMap<>();
+	private List<String> header = new LinkedList<>(), footer = new LinkedList<>();
 
 	@Override
 	public Map<String, Object[]> get() {
@@ -61,9 +60,5 @@ public class EmptyLoader extends DataLoader {
 	@Override
 	public boolean isLoaded() {
 		return true;
-	}
-	
-	public String toString() {
-		return "{\"EmptyLoader\":" + data.size() + "}";
 	}
 }

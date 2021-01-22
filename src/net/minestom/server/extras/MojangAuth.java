@@ -7,7 +7,6 @@ import com.mojang.authlib.AuthenticationService;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.extras.mojangAuth.MojangCrypt;
 import net.minestom.server.utils.validate.Check;
 
@@ -26,8 +25,6 @@ public final class MojangAuth {
      */
     public static void init() {
         Check.stateCondition(enabled, "Mojang auth is already enabled!");
-        Check.stateCondition(MinecraftServer.isStarted(), "The server has already been started!");
-
         enabled = true;
 
         // Generate necessary fields...

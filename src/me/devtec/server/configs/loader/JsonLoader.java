@@ -1,16 +1,16 @@
 package me.devtec.server.configs.loader;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import java.util.HashMap;
 import me.devtec.server.utils.json.Reader;
 
 public class JsonLoader extends DataLoader {
 	private boolean l;
-	private Map<String, Object[]> data = new HashMap<>();
+	private Map<String, Object[]> data = new LinkedHashMap<>();
 
 	@Override
 	public Map<String, Object[]> get() {
@@ -84,9 +84,5 @@ public class JsonLoader extends DataLoader {
 	@Override
 	public boolean isLoaded() {
 		return l;
-	}
-	
-	public String toString() {
-		return "{\"JsonLoader\":" + data.size() + "}";
 	}
 }

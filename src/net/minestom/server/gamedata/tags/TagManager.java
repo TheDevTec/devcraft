@@ -1,8 +1,6 @@
 package net.minestom.server.gamedata.tags;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.Reader;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,7 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.minestom.server.network.packet.server.play.TagsPacket;
-import net.minestom.server.registry.ResourceGatherer;
+import net.minestom.server.registry.ResourceGatherers;
 import net.minestom.server.utils.NamespaceID;
 
 /**
@@ -186,7 +184,7 @@ public class TagManager {
      * @throws FileNotFoundException if the file does not exist
      */
     public Tag load(NamespaceID name, String tagType) throws FileNotFoundException {
-        return load(name, tagType, () -> new FileReader(new File(ResourceGatherer.DATA_FOLDER, "data/" + name.getDomain() + "/tags/" + tagType + "/" + name.getPath() + ".json")));
+        return load(name, tagType, ResourceGatherers.read(name, "loot_tables/"+tagType));
     }
 
     /**

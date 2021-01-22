@@ -151,6 +151,8 @@ public final class NettyServer {
                 ChannelConfig config = ch.config();
                 config.setOption(ChannelOption.TCP_NODELAY, true);
                 config.setOption(ChannelOption.SO_SNDBUF, 262_144);
+                config.setOption(ChannelOption.AUTO_READ, true);
+                config.setOption(ChannelOption.SO_TIMEOUT, 600);
                 config.setAllocator(ByteBufAllocator.DEFAULT);
 
                 ChannelPipeline pipeline = ch.pipeline();

@@ -1,21 +1,22 @@
 package me.devtec.server.configs.loader;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import me.devtec.server.utils.json.Reader;
 
 public class YamlLoader extends DataLoader {
 	private static final Pattern pattern = Pattern.compile("[ ]*(['\"][^'\"]+['\"]|[^\"']?\\w+[^\"']?|.*?):[ ]*(.*)"),
 			fixSplit = Pattern.compile("[\"'](.*)['\"]");
-	private HashMap<String, Object[]> data = new HashMap<>();
+	private Map<String, Object[]> data = new LinkedHashMap<>();
+	private List<String> header = new LinkedList<>(), footer = new LinkedList<>();
 	private boolean l;
-	private ArrayList<String> header = new ArrayList<>(), footer = new ArrayList<>();
 
 	public Set<String> getKeys() {
 		return data.keySet();
@@ -52,8 +53,8 @@ public class YamlLoader extends DataLoader {
 	public void load(String input) {
 		reset();
 		try {
-			ArrayList<Object> items = new ArrayList<>();
-			ArrayList<String> lines = new ArrayList<>();
+			LinkedList<Object> items = new LinkedList<>();
+			LinkedList<String> lines = new LinkedList<>();
 			String key = "";
 			StringBuilder v = null;
 			int last = 0, f = 0, c = 0;
@@ -62,7 +63,7 @@ public class YamlLoader extends DataLoader {
 					if (text.trim().startsWith("#") || text.trim().isEmpty()) {
 						if (!items.isEmpty()) {
 							set(key, items, lines);
-							items = new ArrayList<>();
+							items = new LinkedList<>();
 						}
 						if (c != 0) {
 							if (c == 1) {
@@ -79,7 +80,7 @@ public class YamlLoader extends DataLoader {
 								v = null;
 							} else if (c == 2) {
 								set(key, items, lines);
-								items = new ArrayList<>();
+								items = new LinkedList<>();
 							}
 							c = 0;
 						}
@@ -106,7 +107,7 @@ public class YamlLoader extends DataLoader {
 						}
 						if (c == 2) {
 							set(key, items, lines);
-							items = new ArrayList<>();
+							items = new LinkedList<>();
 						}
 						c = 0;
 					}
@@ -126,7 +127,7 @@ public class YamlLoader extends DataLoader {
 					if (find) {
 						if (!items.isEmpty()) {
 							set(key, items, lines);
-							items = new ArrayList<>();
+							items = new LinkedList<>();
 						}
 						if (c == 1) {
 							v.append(text.substring(c(text)));
@@ -235,7 +236,7 @@ public class YamlLoader extends DataLoader {
 		return i;
 	}
 
-	private final void set(String key, Object o, ArrayList<String> lines) {
+	private final void set(String key, Object o, LinkedList<String> lines) {
 		if(key==null)return;
 		if (data.containsKey(key)) {
 			data.get(key)[0]=o;
@@ -247,9 +248,5 @@ public class YamlLoader extends DataLoader {
 	@Override
 	public boolean isLoaded() {
 		return l;
-	}
-	
-	public String toString() {
-		return "{\"YamlLoader\":" + data.size() + "}";
 	}
 }

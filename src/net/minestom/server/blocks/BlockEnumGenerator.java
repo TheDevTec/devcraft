@@ -40,7 +40,6 @@ import net.minestom.server.PrismarinePaths;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.instance.block.BlockAlternative;
 import net.minestom.server.registry.Registries;
-import net.minestom.server.registry.ResourceGatherer;
 import net.minestom.server.utils.NamespaceID;
 
 /**
@@ -63,12 +62,6 @@ public class BlockEnumGenerator extends MinestomEnumGenerator<BlockContainer> {
         }
 
         targetVersion = args[0];
-
-        try {
-            ResourceGatherer.ensureResourcesArePresent(targetVersion); // TODO
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         String targetPart = DEFAULT_TARGET_PATH;
         if (args.length >= 2) {

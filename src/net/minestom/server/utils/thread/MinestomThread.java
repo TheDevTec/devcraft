@@ -33,7 +33,7 @@ public class MinestomThread extends ThreadPoolExecutor {
             return thread;
         });
         if (!local) {
-            MinestomThread.executors.add(this);
+        	MinestomThread.executors.add(this);
         }
     }
 

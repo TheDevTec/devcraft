@@ -2,17 +2,17 @@ package me.devtec.server.configs.loader;
 
 import java.util.Base64;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 
-import java.util.HashMap;
 import me.devtec.server.utils.json.Reader;
 
 public class ByteLoader extends DataLoader {
-	private HashMap<String, Object[]> data = new HashMap<>();
+	private Map<String, Object[]> data = new LinkedHashMap<>();
 	private boolean l;
 
 	@Override
@@ -96,9 +96,5 @@ public class ByteLoader extends DataLoader {
 	@Override
 	public boolean isLoaded() {
 		return l;
-	}
-	
-	public String toString() {
-		return "{\"ByteLoader\":" + data.size() + "}";
 	}
 }

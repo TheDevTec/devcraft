@@ -27,7 +27,6 @@ import net.minestom.server.item.Material;
 import net.minestom.server.particle.Particle;
 import net.minestom.server.potion.PotionEffect;
 import net.minestom.server.potion.PotionType;
-import net.minestom.server.registry.ResourceGatherer;
 import net.minestom.server.sound.Sound;
 import net.minestom.server.stat.StatisticType;
 import net.minestom.server.utils.NamespaceID;
@@ -143,18 +142,9 @@ public class RegistriesGenerator implements CodeGenerator {
 
     public static void main(String[] args) throws IOException {
         // copy-pasted from BlockEnumGenerator, to stay consistent in the order of arguments
-        String targetVersion;
         if (args.length < 1) {
             System.err.println("Usage: <MC version> [target folder]");
             return;
-        }
-
-        targetVersion = args[0];
-
-        try {
-            ResourceGatherer.ensureResourcesArePresent(targetVersion); // TODO
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         String targetPart = "Configs";
