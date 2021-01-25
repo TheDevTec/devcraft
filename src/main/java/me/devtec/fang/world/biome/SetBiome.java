@@ -94,7 +94,7 @@ public class SetBiome {
     private static Biome LushType(int X, int Y, int Z, double temp){
         //17-19 biomes
         double range = temp - 40;
-        double step = 45/17;
+        double step = 45/16;
 
         if (range <= step){
             return BiomeProperties.PLAINS;
@@ -112,23 +112,17 @@ public class SetBiome {
             return BiomeProperties.DARK_FOREST;
         } else if (range <= step*8){
             return BiomeProperties.DARK_FOREST_HILLS;
-     /*   } else if (range <= step*9){
-            if (Y > 68){
-                return BiomeProperties.SWAMP_HILLS;
-            } else {
-                return BiomeProperties.SWAMP;
-            }    */
-        } else if (range <= step*10){
+        } else if (range <= step*9){
             return BiomeProperties.JUNGLE;
-        } else if (range <= step*11){
+        } else if (range <= step*10){
             return BiomeProperties.JUNGLE_EDGE;
-        } else if (range <= step*12){
+        } else if (range <= step*11){
             return BiomeProperties.MODIFIED_JUNGLE;
-        } else if (range <= step*13){
+        } else if (range <= step*12){
             return BiomeProperties.MODIFIED_JUNGLE_EDGE;
-        } else if (range <= step*14){
+        } else if (range <= step*13){
             return BiomeProperties.BAMBOO_JUNGLE;
-        } else if (range <= step*15){
+        } else if (range <= step*14){
             return BiomeProperties.RIVER;
         } else /*if (range <= step*16)*/{
             return BiomeProperties.BEACH;

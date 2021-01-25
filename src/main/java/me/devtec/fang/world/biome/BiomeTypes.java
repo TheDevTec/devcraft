@@ -1,8 +1,6 @@
 package me.devtec.fang.world.biome;
 
-import me.devtec.fang.Loader;
 import me.devtec.fang.world.NoiseGen;
-import me.devtec.fang.world.generators.Normal;
 import net.minestom.server.instance.batch.ChunkBatch;
 import net.minestom.server.instance.block.Block;
 import org.jetbrains.annotations.NotNull;
@@ -91,7 +89,7 @@ public class BiomeTypes {
     private void LushType(@NotNull ChunkBatch batch, int X, int Y, int Z, int inChunkX, int inChunkZ, double temp){
         //17-19 biomes
         double range = temp - 40;
-        double step = 45/17;
+        double step = 45/16;
 
         if (range <= step){
             Plains(batch, X, Y, Z);
@@ -110,24 +108,18 @@ public class BiomeTypes {
         } else if (range <= step*8){
             DarkForestHills(batch, X, Y, Z);
         } else if (range <= step*9){
-            if (Y > 68){
-                SwampHills(batch, X, Y, Z);
-            } else {
-                Swamp(batch, X, Y, Z);
-            }
-        } else if (range <= step*10){
             Jungle(batch, X, Y, Z);
-        } else if (range <= step*11){
+        } else if (range <= step*10){
             JungleEdge(batch, X, Y, Z);
-        } else if (range <= step*12){
+        } else if (range <= step*11){
             ModifiedJungle(batch, X, Y, Z);
-        } else if (range <= step*13){
+        } else if (range <= step*12){
             ModifiedJungleEdge(batch, X, Y, Z);
-        } else if (range <= step*14){
+        } else if (range <= step*13){
             BambooJungle(batch, X, Y, Z);
-        } else if (range <= step*15){
+        } else if (range <= step*14){
             River(batch, X, Y, Z);
-        } else if (range <= step*16){
+        } else if (range <= step*15){
             Beach(batch, X, Y, Z);
         }
     }

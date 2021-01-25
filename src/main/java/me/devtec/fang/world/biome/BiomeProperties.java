@@ -1,12 +1,9 @@
 package me.devtec.fang.world.biome;
 
-import me.devtec.fang.world.NoiseGen;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.utils.NamespaceID;
 import net.minestom.server.world.biomes.Biome;
-import net.minestom.server.world.biomes.BiomeEffects;
 import net.minestom.server.world.biomes.BiomeManager;
-import org.apache.commons.codec.binary.Hex;
 
 public class BiomeProperties {
 
@@ -39,8 +36,6 @@ public class BiomeProperties {
         biomeMan().addBiome(TALL_BIRCH_FOREST);
         biomeMan().addBiome(DARK_FOREST);
         biomeMan().addBiome(DARK_FOREST_HILLS);
-        //biomeMan().addBiome(SWAMP);
-        //biomeMan().addBiome(SWAMP_HILLS); WHY DOES IT HATE SWAMPS
         biomeMan().addBiome(JUNGLE);
         biomeMan().addBiome(JUNGLE_EDGE);
         biomeMan().addBiome(BAMBOO_JUNGLE);
@@ -62,6 +57,10 @@ public class BiomeProperties {
         biomeMan().addBiome(WOODED_BADLANDS_PLATEAU);
         biomeMan().addBiome(MODIFIED_BADLANDS_PLATEAU);
         biomeMan().addBiome(MODIFIED_WOODED_BADLANDS_PLATEAU);
+        biomeMan().addBiome(WARM_OCEAN);
+        biomeMan().addBiome(LUKEWARM_OCEAN);
+        biomeMan().addBiome(COLD_OCEAN);
+        biomeMan().addBiome(FROZEN_OCEAN);
     }
 
     public static final Biome SNOWY_TUNDRA = Biome.builder()
@@ -284,26 +283,6 @@ public class BiomeProperties {
             .effects(BiomeTint.DARK_FOREST)
             .build();
 
-    public static final Biome SWAMP = Biome.builder()
-            .category(Biome.Category.SWAMP)
-            .name(NamespaceID.from("minecraft:swamp"))
-            .temperature(0.8F)
-            .downfall(0.4F)
-            .depth(0.125F)
-            .scale(0.05F)
-            .effects(BiomeTint.SWAMP)
-            .build();
-
-    public static final Biome SWAMP_HILLS = Biome.builder()
-            .category(Biome.Category.SWAMP)
-            .name(NamespaceID.from("minecraft:swamp_hills"))
-            .temperature(0.8F)
-            .downfall(0.4F)
-            .depth(0.125F)
-            .scale(0.05F)
-            .effects(BiomeTint.SWAMP)
-            .build();
-
     public static final Biome JUNGLE = Biome.builder()
             .category(Biome.Category.JUNGLE)
             .name(NamespaceID.from("minecraft:jungle"))
@@ -512,6 +491,46 @@ public class BiomeProperties {
             .depth(0.125F)
             .scale(0.05F)
             .effects(BiomeTint.BADLANDS)
+            .build();
+
+    public static final Biome WARM_OCEAN = Biome.builder()
+            .category(Biome.Category.OCEAN)
+            .name(NamespaceID.from("minecraft:warm_ocean"))
+            .temperature(0.5F)
+            .downfall(0.4F)
+            .depth(0.125F)
+            .scale(0.05F)
+            .effects(BiomeTint.WARM_OCEAN)
+            .build();
+
+    public static final Biome LUKEWARM_OCEAN = Biome.builder()
+            .category(Biome.Category.OCEAN)
+            .name(NamespaceID.from("minecraft:lukewarm_ocean"))
+            .temperature(0.5F)
+            .downfall(0.4F)
+            .depth(0.125F)
+            .scale(0.05F)
+            .effects(BiomeTint.LUKEWARM_OCEAN)
+            .build();
+
+    public static final Biome COLD_OCEAN = Biome.builder()
+            .category(Biome.Category.OCEAN)
+            .name(NamespaceID.from("minecraft:deep_ocean"))
+            .temperature(0.5F)
+            .downfall(0.4F)
+            .depth(0.125F)
+            .scale(0.05F)
+            .effects(BiomeTint.COLD_OCEAN)
+            .build();
+
+    public static final Biome FROZEN_OCEAN = Biome.builder()
+            .category(Biome.Category.OCEAN)
+            .name(NamespaceID.from("minecraft:frozen_ocean"))
+            .temperature(0.5F)
+            .downfall(0.4F)
+            .depth(0.125F)
+            .scale(0.05F)
+            .effects(BiomeTint.FROZEN_OCEAN)
             .build();
 
 }
